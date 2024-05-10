@@ -20,25 +20,20 @@
 \def\TYUST@cover@classn{分类号}
 \def\TYUST@cover@schoolc{学校代码}
 \def\TYUST@cover@sclass{密级}
-\def\TYUST@cover@etitle{英文题目}
-\def\TYUST@cover@authors{研究生姓名}
-\def\TYUST@cover@major{学科专业}
 
-\ifTYUST@doctor%博士
-\def\TYUST@cover@ctitle{论文题目}
-\def\TYUST@cover@id{学号}
-\def\TYUST@cover@supervisor{指导教师}
-\def\TYUST@cover@research{研究方向}
-\def\TYUST@cover@period{学习年限}
-\else%硕士
 \def\TYUST@cover@ctitle{学位论文题目}
+\def\TYUST@cover@etitle{英文题目}
+
+\def\TYUST@cover@authors{研究生姓名}
 \def\TYUST@cover@supervisor{导师姓名及职称}
 \def\TYUST@cover@department{培养单位}
-
+\def\TYUST@cover@major{学科专业}
 \def\TYUST@cover@subdate{论文提交日期}
 \def\TYUST@cover@reportdate{论文答辩日期}
 \def\TYUST@cover@chairman{答辩委员会主席}
-\fi
+
+
+
 % ----- 固定长度带下划线 ----- %
 \RequirePackage{adjustbox}
 \newlength\myheight
@@ -76,33 +71,64 @@
 \TYUST@def@term{reportdate}
 \TYUST@def@term{chairman}
 \TYUST@def@term{type}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%--封面--%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ----- 硕士封面中间 ----- %
-\newCJKfontfamily\bkaishu{方正楷体简体}[BoldFont=方正粗楷简体]
-\newCJKfontfamily\jc{楷体}[AutoFakeBold=.5]
-\newCJKfontfamily\jcc{楷体}[AutoFakeBold=2.5]
+% \newCJKfontfamily\bkaishu{方正楷体简体}[BoldFont=方正粗楷简体]
+% \setCJKfamilyfont{zhsong}[AutoFakeBold = {5}]{SimSun}
+% \newcommand{\jc}{\CJKfamily{zhsong}}
+\newCJKfontfamily\jc{宋体}[AutoFakeBold=4]
+\newCJKfontfamily\jcc{楷体}[AutoFakeBold=.5]
+\newCJKfontfamily\jccc{楷体}[AutoFakeBold=2.5]
 \newcommand{\covermaster}{%
     \begin{center}
         \setstretch{3}
-        \ziju{0.1}
-        {\jcc\bfseries\fontsize{33}{15} \selectfont 太原科技大学硕士学位论文}
+        \ziju{0.08}
+        \vspace{.4cm}
+        {\jccc\bfseries\fontsize{33}{15} \selectfont 太原科技大学硕士学位论文}
         \par
-        {\jc\bfseries\zihao{-1} （\TYUST@type）}
+        {\jccc\bfseries\zihao{-1} （\TYUST@type）}
+        \vspace{2cm}
     \end{center}%
 }
 % ----- 博士封面中间 ----- %
-% \TYUST@def@term{author}
+\newcommand{\coverdoctor}{%
+    \begin{center}
+        \setstretch{3}
+        \ziju{0.1}
+        \vspace{1.8cm}
+        {\jccc\bfseries\fontsize{33}{15} \selectfont 太原科技大学博士学位论文}
+        \vspace{3.4cm}
+    \end{center}%
+}
+
+% ----- 博士封面第二页 ----- %
+\newcommand{\doctorengcover}{
+\thispagestyle{empty}
+    \vspace*{1cm}
+    \begin{center}
+    {\bf Ph.D.Dissertation}\par
+    \TYUST@etitle\par
+    by\par
+    % \vfill
+    \end{center}
+
+}
+
 
 % \ifTYUST@doctor
 % ...
 % \else
 % ..
 % \fi
-\newcommand{\as}{\songti\zihao{3}\bf}
+\newcommand{\as}{\songti\zihao{4}\bf}
 \newcommand{\bs}{\songti\zihao{4}\bf}
 \newlength{\TYUST@title@width}
 \def\TYUST@put@title#1{\makebox{\hb@xt@\TYUST@title@width{#1}}}
 
-\ifTYUST@doctor%博士
 \renewcommand{\maketitle}{
 \thispagestyle{empty}
 \noindent
@@ -110,68 +136,45 @@
 \vspace{-10pt}
 \noindent\begin{flushleft}
 \renewcommand\arraystretch{2}
-    \songti\zihao{5}\bf
+    \bfseries\jc\zihao{5}
     \setlength{\TYUST@title@width}{5em}
-    \begin{tabular}{p{\TYUST@title@width}@{~}l}
-        \TYUST@put@title{\TYUST@cover@classn  \TYUST@cover@sep} &\TYUST@classn    \\
-        \TYUST@put@title{\TYUST@cover@schoolc \TYUST@cover@sep} &\TYUST@schoolc   \\
-        \TYUST@put@title{\TYUST@cover@sclass  \TYUST@cover@sep} &\TYUST@sclass    \\
+    \begin{tabular}{p{\TYUST@title@width}@{~~~~}l}
+        \setlength{\TYUST@title@width}{5em}\TYUST@put@title{\TYUST@cover@classn  \TYUST@cover@sep} &\setlength{\TYUST@title@width}{3em}\TYUST@put@title{\TYUST@classn}    \\
+        \setlength{\TYUST@title@width}{5em}\TYUST@put@title{\TYUST@cover@schoolc \TYUST@cover@sep} &\setlength{\TYUST@title@width}{3em}\TYUST@put@title{\TYUST@schoolc}   \\
+        \setlength{\TYUST@title@width}{5em}\TYUST@put@title{\TYUST@cover@sclass  \TYUST@cover@sep} &\setlength{\TYUST@title@width}{3em}\TYUST@put@title{\TYUST@sclass}   \\
     \end{tabular}
 \end{flushleft}
 \end{minipage}
 
-\setlength{\TYUST@title@width}{9em}
-\begin{center}
-\renewcommand\arraystretch{2}
-\begin{tabular}{p{\TYUST@title@width}@{~}l}
-    \TYUST@put@title{\as\TYUST@cover@ctitle        \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@ctitle}        \\
-    \TYUST@put@title{\as\TYUST@cover@etitle        \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@etitle}        \\
-    \TYUST@put@title{\as\TYUST@cover@authors       \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@authors}       \\
-    \TYUST@put@title{\as\TYUST@cover@id            \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@id}            \\
-    \TYUST@put@title{\as\TYUST@cover@supervisor    \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@supervisor}    \\
-    \TYUST@put@title{\as\TYUST@cover@major         \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@major}         \\
-    \TYUST@put@title{\as\TYUST@cover@research      \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@research}      \\
-    \TYUST@put@title{\as\TYUST@cover@period        \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@period}        \\
-    \bs
-\end{tabular}
-\end{center}
-}
-\else%硕士
-\renewcommand{\maketitle}{
-\thispagestyle{empty}
-\noindent\begin{minipage}{.3\textwidth}
-\vspace{-10pt}
-\noindent\begin{flushleft}
-\renewcommand\arraystretch{1.5}
-    \songti\zihao{5}\bf
-    \setlength{\TYUST@title@width}{5em}
-    \begin{tabular}{p{\TYUST@title@width}@{~}l}
-        \TYUST@put@title{\TYUST@cover@classn  \TYUST@cover@sep} &\TYUST@classn    \\[.8ex]
-        \TYUST@put@title{\TYUST@cover@schoolc \TYUST@cover@sep} &\TYUST@schoolc   \\[.8ex]
-        \TYUST@put@title{\TYUST@cover@sclass  \TYUST@cover@sep} &\TYUST@sclass    \\[.8ex]
-    \end{tabular}
-\end{flushleft}
-\end{minipage}
-
+\ifTYUST@doctor
+\coverdoctor
+\else
 \covermaster
-
-\setlength{\TYUST@title@width}{12em}
+\fi
+\setlength{\TYUST@title@width}{10em}
 \begin{center}
 \renewcommand\arraystretch{2}
-\begin{tabular}{p{\TYUST@title@width}@{~}l}
-    \TYUST@put@title{\as\TYUST@cover@ctitle        \TYUST@cover@sep} &\UnderlineRight{7cm}{1.5mm}{\bs\TYUST@ctitle}        \\
-    \TYUST@put@title{\as\TYUST@cover@etitle        \TYUST@cover@sep} &\UnderlineRight{7cm}{1.5mm}{\bs\TYUST@etitle}        \\
-    \TYUST@put@title{\as\TYUST@cover@authors       \TYUST@cover@sep} &\UnderlineRight{7cm}{1.5mm}{\bs\TYUST@authors}       \\
-    \TYUST@put@title{\as\TYUST@cover@supervisor    \TYUST@cover@sep} &\UnderlineRight{7cm}{1.5mm}{\bs\TYUST@supervisor}    \\
-    \TYUST@put@title{\as\TYUST@cover@department    \TYUST@cover@sep} &\UnderlineRight{7cm}{1.5mm}{\bs\TYUST@department}    \\
-    \TYUST@put@title{\as\TYUST@cover@major         \TYUST@cover@sep} &\UnderlineRight{7cm}{1.5mm}{\bs\TYUST@major}         \\
-    \TYUST@put@title{\as\TYUST@cover@subdate       \TYUST@cover@sep} &\UnderlineRight{7cm}{1.5mm}{\bs\TYUST@subdate}       \\
-    \TYUST@put@title{\as\TYUST@cover@reportdate    \TYUST@cover@sep} &\UnderlineRight{7cm}{1.5mm}{\bs\TYUST@reportdate}    \\
-    \TYUST@put@title{\as\TYUST@cover@chairman      \TYUST@cover@sep} &\UnderlineRight{7cm}{1.5mm}{\bs\TYUST@chairman}      \\
+    \begin{tabular}{p{\TYUST@title@width}@{~}l}
+    \ifTYUST@doctor
+    \TYUST@put@title{\as\TYUST@cover@ctitle        \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@ctitle}        \\[4cm]
+    \else
+    \TYUST@put@title{\as\TYUST@cover@ctitle        \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@ctitle}        \\[1cm]
+    \TYUST@put@title{\as\TYUST@cover@etitle        \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@etitle}        \\[2cm]
+    \fi
+    \TYUST@put@title{\as\TYUST@cover@authors       \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@authors}       \\
+    \TYUST@put@title{\as\TYUST@cover@supervisor    \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@supervisor}    \\
+    \TYUST@put@title{\as\TYUST@cover@department    \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@department}  \\
+    \TYUST@put@title{\as\TYUST@cover@major         \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@major}         \\
+    \TYUST@put@title{\as\TYUST@cover@subdate       \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@subdate}       \\
+    \TYUST@put@title{\as\TYUST@cover@reportdate    \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@reportdate}    \\
+    \TYUST@put@title{\as\TYUST@cover@chairman      \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@chairman}      \\
     \bs
-\end{tabular}
-\end{center}}
-\fi
+    \end{tabular}
+\end{center}
+\clearpage
+\doctorengcover
+}
+
 
 % \LoadClass[heading=true,zihao=-4,sub3section,scheme = chinese,openany]{ctexbook}
 
