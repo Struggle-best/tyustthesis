@@ -7,8 +7,10 @@
 
 \RequirePackage[left=3cm,right=2cm,top=2.54cm,bottom=2.54cm]{geometry}
 
-\RequirePackage{float,setspace}
+\RequirePackage{float,setspace,lipsum,zhlipsum}
 \setmainfont{Times New Roman}
+\setlength{\baselineskip}{20pt}\selectfont
+\songti
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 可选参数定义
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -21,6 +23,37 @@
 \DeclareOption{encover}{\TYUST@encovertrue}
 \DeclareOption{declare}{\TYUST@declaretrue}
 \ProcessOptions\relax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 页眉页脚
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\fc}{\songti\zihao{5}}
+\RequirePackage{fancyhdr}
+\fancypagestyle{cabstyle}{%中文摘要页眉页脚
+    \fancyhf{}
+    \fancyhead[CO]{\fc 摘\hspace{\ccwd}要} % 奇数页 页眉 中
+    \fancyhead[CE]{\fc\TYUST@ctitle} % 偶数页 页眉 中
+    \fancyfoot[C]{\fc\thepage} % 页脚 中
+    % \renewcommand{\headrulewidth}{0.5pt} % 设置页眉下方横线的粗细为0.5pt
+    % \renewcommand{\footrulewidth}{0pt} % 页脚上方无横线
+}
+\fancypagestyle{eabstyle}{%英文摘要页眉页脚
+    \fancyhf{}
+    \fancyhead[CO]{\fc ABSTRACT} % 奇数页 页眉 中
+    \fancyhead[CE]{\fc\TYUST@ctitle} % 偶数页 页眉 中
+    \fancyfoot[C]{\fc\thepage} % 页脚 中
+    % \renewcommand{\headrulewidth}{0.5pt} % 设置页眉下方横线的粗细为0.5pt
+    % \renewcommand{\footrulewidth}{0pt} % 页脚上方无横线
+}
+\fancypagestyle{mystyle}{%正文页眉页脚
+    \fancyhf{}
+    \fancyhead[CO]{\fc\leftmark} % 奇数页 页眉 中
+    \fancyhead[CE]{\fc\TYUST@ctitle} % 偶数页 页眉 中
+    \fancyfoot[C]{\fc\thepage} % 页脚 中
+    % \renewcommand{\headrulewidth}{0.5pt} % 设置页眉下方横线的粗细为0.5pt
+    % \renewcommand{\footrulewidth}{0pt} % 页脚上方无横线
+}
+\pagestyle{mystyle}
+\renewcommand{\chaptermark}[1]{\@mkboth{第\chinese{chapter}\ 章  ~~#1}{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 封面
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,7 +139,7 @@
         \vspace{2cm}
     \end{center}%
 }
-% ----- 博士封面中间 ----- %
+% ----- 博士中文封面中间 ----- %
 \newcommand{\coverdoctor}{%
     \begin{center}
         \setstretch{3}
@@ -117,9 +150,10 @@
     \end{center}%
 }
 
-% ----- 博士封面第二页 ----- %
+% ----- 博士英文封面 ----- %
 \newcommand{\doctorengcover}{
-\thispagestyle{TYUST@empty}
+\clearpage
+\thispagestyle{empty}
     \vspace*{.5cm}
     \begin{center}
     {\bf \zihao{-2}Ph.D.Dissertation}\par\vspace*{.5cm}
@@ -141,10 +175,12 @@
     {\fontsize{13.5}{10}\TYUST@edate}
     % \vfill
     \end{center}
+\clearpage
+\thispagestyle{empty}
 }
 % ----- 声明页 ----- %
 \newcommand{\authorizationcover}{
-\thispagestyle{TYUST@empty}
+\thispagestyle{empty}
 \setstretch{1.8}
 \begin{center}
     \vspace*{.5cm}
@@ -168,6 +204,8 @@
 \noindent 作者签名：\hspace{11\ccwd}导师签名：\hspace{11\ccwd}\par
 \noindent 日\hspace{2\ccwd} 期：\hspace{2.5\ccwd} 年\hspace{1.5\ccwd} 月\hspace{1.5\ccwd} 日\hspace{1.25\ccwd}
 日\hspace{2\ccwd} 期：\hspace{2.5\ccwd} 年\hspace{1.5\ccwd} 月\hspace{1.5\ccwd} 日
+\clearpage
+\thispagestyle{empty}
 }
 % \ifTYUST@doctor
 % ...
@@ -180,7 +218,8 @@
 \def\TYUST@put@title#1{\makebox{\hb@xt@\TYUST@title@width{#1}}}
 
 \renewcommand{\maketitle}{
-\thispagestyle{TYUST@empty}
+\clearpage
+\thispagestyle{empty}
 \noindent
 \begin{minipage}{.3\textwidth}
 \vspace{-10pt}
@@ -220,50 +259,39 @@
     \TYUST@put@title{\as\TYUST@cover@chairman      \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@chairman}      \\
     \bs
     \end{tabular}
-\end{center}\clearpage
+\end{center}
+\clearpage\thispagestyle{empty}\cleardoublepage
+
 \ifTYUST@encover
 \doctorengcover
-\clearpage
+\thispagestyle{empty}\cleardoublepage
 \else\fi
 \ifTYUST@declare
 \authorizationcover
-\clearpage
 \else\fi}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 奇偶数页眉
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\ps@TYUST@empty{%不要页眉页脚
-  \let\@oddhead\@empty\let\@evenhead\@empty%
-  \let\@oddfoot\@empty\let\@evenfoot\@empty}
-\def\ps@zzu@headings{%%中间页眉
-\def\@oddhead{\vbox to\headheight{\vfill%
-\hb@xt@\textwidth{\zihao{5}\rmfamily\hfill\leftmark\hfill}%
-    \vskip\tw@\p@\hbox{\vrule width\textwidth height.4\p@ depth\z@}}}
-\let\@evenhead=\@oddhead
-\def\@oddfoot{\zihao{5}\hfil\thepage\hfil}
-\let\@evenfoot=\@oddfoot}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 章节设置
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{ctexheading,needspace}
 
 \ctexset{
+    punct=quanjiao,%全角式：所有标点占一个汉字宽度，相邻两个标点占1.5 汉字宽度
     % tocdepth ={subsection},
     % secnumdepth ={subsubsection},
     % contentsname={目\hspace{0.25cm} 录},
     % listfigurename={\centerline {插\hspace{0.25cm} 图}},
     % listtablename={\centerline{ 表\hspace{0.25cm} 格}},
     % bibname = {参考文献},
-    chapter={
-        afterindent=false,
-        pagestyle={zzu@headings},
-        % break=\if@openright \else\clearpage\fi,
-        % pagestyle = myfc2,
+    chapter={%一级标题：黑体3号，段前24磅，段后18磅
+        afterindent=true,
+        aftername=\hskip\ccwd,
+        pagestyle={mystyle},
         name = {第,章},
         number = \chinese{chapter},% \Roman  \arabic 
-        format = \heiti\zihao{-2}\centering,%\bfseries    %\raggedleft   \raggedright 
-        beforeskip = 1em,
-        afterskip  = 2em
+        format = \heiti\zihao{3}\centering,%\bfseries    %\raggedleft   \raggedright 
+        beforeskip=-26pt,
+        afterskip=18pt,
     },
     % section={
     %     break = \Needspace{.5\textheight},    %needspace宏包
@@ -302,15 +330,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 中英文摘要
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\renewcommand{\chaptermark}[1]{\@mkboth{第\chinese{chapter}\ 章  ~~#1}{}}
-\newcommand{\cabstractname}{摘\hspace{\ccwd} 要}
-\newcommand{\eabstractname}{Abstract}
+\newcommand{\cabstractname}{摘\hspace{\ccwd}要}
+\newcommand{\eabstractname}{ABSTRACT}
 \newenvironment{cabstract}{
-    \thispagestyle{zzu@headings}
-	\hfill{\chapter*{\cabstractname}}
-}
+    \chapter*{\cabstractname}
+    \thispagestyle{cabstyle} 
+    \zihao{-4}\songti\setlength{\baselineskip}{20pt}\selectfont
+}{\clearpage}
+\newenvironment{eabstract}{
+    \chapter*{\eabstractname}
+    \thispagestyle{eabstyle}
+    \zihao{-4}\setlength{\baselineskip}{20pt}\selectfont
+}{\clearpage}
+% \pagenumbering{arabic}
+% \setcounter{page}{1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 文前，正文，文后格式
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \renewcommand\frontmatter{\setcounter{page}{1}}
+% \renewcommand\mainmatter{\pagenumbering{arabic}\setcounter{page}{1}\@mainmatterfalse}
+% \renewcommand\backmatter{\setcounter{page}{1}}
 
 
-% \LoadClass[heading=true,zihao=-4,sub3section,scheme = chinese,openany]{ctexbook}
-
+  
 \endinput
