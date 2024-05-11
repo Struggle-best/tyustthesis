@@ -1,12 +1,20 @@
-\documentclass[doctor]{tyust}
-%   [doctor]  [master]
+\documentclass[master,encover,declare]{tyust}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 可选参数：
+%% master    -- 硕士论文封面
+%% doctor    -- 博士论文中文封面
+%% encover   -- 博士论文英文封面
+%% declare   -- 声明页
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[showframe]{fgruler}
 \classn{T P 3 9 1}%必须敲空格实现俩端对齐
 \schoolc{1 0 1 0 9}%必须敲空格实现俩端对齐
 \sclass{公开}
-%% ----- 硕士 ----- %%
-\ctitle{基于响应面优化与粒子群算法}
-\etitle{Research on Lightweight of Spreader Boom Based on Response Surface}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ---------------- 论文封面信息 ----------------- 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ctitle{太原科技大学硕士论文 \LaTeX 模板使用示例}
+\etitle{Example of Using the Master's Thesis \LaTeX Template for Taiyuan University of Science and Technology}
 \authors{樊超}
 \supervisor{王帆 副教授}
 \department{电子信息工程学院}
@@ -14,17 +22,19 @@
 \subdate{2024年5月}
 \reportdate{2024年5月1日}
 \chairman{某某 教授}
-\type{学术型}
-%% ----- 博士 ----- %%
-\ctitle{基于响应面优化与粒子群算法}
-\etitle{Research on Lightweight of Spreader Boom Based on Response Surface}
-\authors{XX}
-\supervisor{XX 教授}
-\department{电子信息工程学院}
-\major{控制科学与工程}
-\subdate{2024年5月}
-\reportdate{2024年5月1日}
-\chairman{某某 教授}
+\type{学术型}% 硕士论文需要这个信息
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ------------- 博士论文英文封面信息 ------------- 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\eauthors{English name}
+\emajor{Control Science and Engineering}
+\edepartment{School of Electronic Infromation Engineering}
+\eschool{Taiyuan University of Science and Technology}
+\esupervisor{导师英文姓名}
+\edate{6.3,2023}
+
+
 \begin{document}
 \maketitle
+\section{xixi}
 \end{document}

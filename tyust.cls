@@ -12,8 +12,12 @@
 % ----- 学位选项 ----- %
 \newif\ifTYUST@master\TYUST@masterfalse
 \newif\ifTYUST@doctor\TYUST@doctorfalse
+\newif\ifTYUST@encover\TYUST@encoverfalse
+\newif\ifTYUST@declare\TYUST@declarefalse
 \DeclareOption{master}{\TYUST@mastertrue}
 \DeclareOption{doctor}{\TYUST@doctortrue}
+\DeclareOption{encover}{\TYUST@encovertrue}
+\DeclareOption{declare}{\TYUST@declaretrue}
 \ProcessOptions\relax
 % ----- 封面固定信息 ----- %
 \def\TYUST@cover@sep{：}
@@ -58,7 +62,7 @@
 \TYUST@def@term{classn}
 \TYUST@def@term{schoolc}
 \TYUST@def@term{sclass}
-\TYUST@def@term{etitle}
+
 \TYUST@def@term{authors}
 \TYUST@def@term{major}
 \TYUST@def@term{ctitle}
@@ -71,8 +75,14 @@
 \TYUST@def@term{reportdate}
 \TYUST@def@term{chairman}
 \TYUST@def@term{type}
-
-
+% ----- 博士封面第二页 ----- %
+\TYUST@def@term{etitle}
+\TYUST@def@term{eauthors}
+\TYUST@def@term{emajor}
+\TYUST@def@term{edepartment}
+\TYUST@def@term{eschool}
+\TYUST@def@term{esupervisor}
+\TYUST@def@term{edate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%--封面--%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -108,17 +118,55 @@
 % ----- 博士封面第二页 ----- %
 \newcommand{\doctorengcover}{
 \thispagestyle{empty}
-    \vspace*{1cm}
+    \vspace*{.5cm}
     \begin{center}
-    {\bf Ph.D.Dissertation}\par
-    \TYUST@etitle\par
-    by\par
+    {\bf \zihao{-2}Ph.D.Dissertation}\par\vspace*{.5cm}
+    {\fontsize{13.5}{10}\selectfont\TYUST@etitle}\par\vspace*{.5cm}
+    {\bf\zihao{-3}by}\par\vspace*{.5cm}
+    {\fontsize{13.5}{10}\TYUST@eauthors}\par\vspace*{.5cm}
+    {\bf\zihao{-3}in}\par\vspace*{.5cm}
+    {\fontsize{13.5}{10}\TYUST@emajor}\par\vspace*{.5cm}
+    {\bf\zihao{-3}in the}\par\vspace*{.5cm}
+    {\fontsize{13.5}{10}\TYUST@edepartment}\par\vspace*{.5cm}
+    {\bf\zihao{-3}of}\par\vspace*{.5cm}
+    {\fontsize{13.5}{10}\TYUST@eschool}\par\vspace*{1cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=.5]{cover/logo1.jpg}
+    \end{figure}\vspace*{1cm}
+    {\bf\zihao{-3}Supervisor}\par\vspace*{.5cm}
+    {\bf\zihao{-3}Professor:} {\fontsize{13.5}{10}\TYUST@esupervisor}\par\vspace*{.5cm}
+    {\fontsize{13.5}{10}\TYUST@edate}
     % \vfill
     \end{center}
-
 }
-
-
+% ----- 声明页 ----- %
+\newcommand{\authorizationcover}{
+\thispagestyle{empty}
+\setstretch{1.8}
+\begin{center}
+    \vspace*{.5cm}
+    \heiti\zihao{3}学位论文原创性声明
+\end{center}
+\vspace*{.8cm}
+\songti\zihao{4}\hspace{2\ccwd}本人郑重声明：所呈交的论文是本人在导师的指导下独立进行研究所取得的研究成果。除了文中特别加以标注引用的内容外，
+本论文不包含任何其他个人或集体已经发表或撰写的成果作品。对本文的研究做出重要贡献的个人和集体，均已在文中以
+明确方式标明。本人完全意识到本声明的法律后果由本人承担。\par
+\vspace*{1cm}
+\noindent 作者签名：\hspace{11\ccwd}日\hspace{2\ccwd} 期：\hspace{3\ccwd} 年\hspace{2\ccwd} 月\hspace{2\ccwd} 日
+\begin{center}
+    \vspace*{.9cm}
+    \heiti\zihao{3}学位论文授权使用声明
+\end{center}
+\vspace*{.8cm}
+\hspace{2\ccwd}本人完全了解并同意遵守太原科技大学有关保存和使用学位论文的规定，即太原科技大学有权保留送交学位论文的副本，允许该论文被查阅，
+可以按照学术研究公开原则和保护知识产权的原则公布该论文的全部或部分内容，可以采用影印、缩印或其他复制手段保存、汇编本学位论文。\par
+\hspace{2\ccwd}涉密及延迟公开的学位论文在解密或延迟期后适用本声明。\par
+\vspace*{1cm}
+\noindent 作者签名：\hspace{11\ccwd}导师签名：\hspace{11\ccwd}\par
+\noindent 日\hspace{2\ccwd} 期：\hspace{2.5\ccwd} 年\hspace{1.5\ccwd} 月\hspace{1.5\ccwd} 日\hspace{1.25\ccwd}
+日\hspace{2\ccwd} 期：\hspace{2.5\ccwd} 年\hspace{1.5\ccwd} 月\hspace{1.5\ccwd} 日
+}
 % \ifTYUST@doctor
 % ...
 % \else
@@ -170,9 +218,16 @@
     \TYUST@put@title{\as\TYUST@cover@chairman      \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@chairman}      \\
     \bs
     \end{tabular}
-\end{center}
-\clearpage
+\end{center}\clearpage
+\ifTYUST@encover
 \doctorengcover
+\clearpage
+\else\fi
+\ifTYUST@declare
+\authorizationcover
+\clearpage
+\else\fi
+
 }
 
 
