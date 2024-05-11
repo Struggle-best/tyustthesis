@@ -9,7 +9,9 @@
 
 \RequirePackage{float,setspace}
 \setmainfont{Times New Roman}
-% ----- 学位选项 ----- %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 可选参数定义
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newif\ifTYUST@master\TYUST@masterfalse
 \newif\ifTYUST@doctor\TYUST@doctorfalse
 \newif\ifTYUST@encover\TYUST@encoverfalse
@@ -19,6 +21,9 @@
 \DeclareOption{encover}{\TYUST@encovertrue}
 \DeclareOption{declare}{\TYUST@declaretrue}
 \ProcessOptions\relax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 封面
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ----- 封面固定信息 ----- %
 \def\TYUST@cover@sep{：}
 \def\TYUST@cover@classn{分类号}
@@ -36,8 +41,6 @@
 \def\TYUST@cover@reportdate{论文答辩日期}
 \def\TYUST@cover@chairman{答辩委员会主席}
 
-
-
 % ----- 固定长度带下划线 ----- %
 \RequirePackage{adjustbox}
 \newlength\myheight
@@ -54,7 +57,7 @@
 		\kern\Mysavedprevdepth
 	\end{adjustbox}%
 }
-% ----- 封面可替换信息 ----- %
+% ----- 封面固定信息 ----- %
 \def\TYUST@def@term#1{%\TYUST@classn \classn{}
   \expandafter\gdef\csname #1\endcsname##1{%
     \expandafter\gdef\csname TYUST@#1\endcsname{##1}}
@@ -75,7 +78,7 @@
 \TYUST@def@term{reportdate}
 \TYUST@def@term{chairman}
 \TYUST@def@term{type}
-% ----- 博士封面第二页 ----- %
+% ----- 博士英文封面固定信息 ----- %
 \TYUST@def@term{etitle}
 \TYUST@def@term{eauthors}
 \TYUST@def@term{emajor}
@@ -83,13 +86,12 @@
 \TYUST@def@term{eschool}
 \TYUST@def@term{esupervisor}
 \TYUST@def@term{edate}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%--封面--%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % ----- 硕士封面中间 ----- %
 % \newCJKfontfamily\bkaishu{方正楷体简体}[BoldFont=方正粗楷简体]
 % \setCJKfamilyfont{zhsong}[AutoFakeBold = {5}]{SimSun}
 % \newcommand{\jc}{\CJKfamily{zhsong}}
+% latex 伪粗实现,只是为了和word效果相同 =,=!
 \newCJKfontfamily\jc{宋体}[AutoFakeBold=4]
 \newCJKfontfamily\jcc{楷体}[AutoFakeBold=.5]
 \newCJKfontfamily\jccc{楷体}[AutoFakeBold=2.5]
@@ -117,7 +119,7 @@
 
 % ----- 博士封面第二页 ----- %
 \newcommand{\doctorengcover}{
-\thispagestyle{empty}
+\thispagestyle{TYUST@empty}
     \vspace*{.5cm}
     \begin{center}
     {\bf \zihao{-2}Ph.D.Dissertation}\par\vspace*{.5cm}
@@ -142,7 +144,7 @@
 }
 % ----- 声明页 ----- %
 \newcommand{\authorizationcover}{
-\thispagestyle{empty}
+\thispagestyle{TYUST@empty}
 \setstretch{1.8}
 \begin{center}
     \vspace*{.5cm}
@@ -178,7 +180,7 @@
 \def\TYUST@put@title#1{\makebox{\hb@xt@\TYUST@title@width{#1}}}
 
 \renewcommand{\maketitle}{
-\thispagestyle{empty}
+\thispagestyle{TYUST@empty}
 \noindent
 \begin{minipage}{.3\textwidth}
 \vspace{-10pt}
@@ -226,8 +228,86 @@
 \ifTYUST@declare
 \authorizationcover
 \clearpage
-\else\fi
+\else\fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 奇偶数页眉
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\ps@TYUST@empty{%不要页眉页脚
+  \let\@oddhead\@empty\let\@evenhead\@empty%
+  \let\@oddfoot\@empty\let\@evenfoot\@empty}
+\def\ps@zzu@headings{%%中间页眉
+\def\@oddhead{\vbox to\headheight{\vfill%
+\hb@xt@\textwidth{\zihao{5}\rmfamily\hfill\leftmark\hfill}%
+    \vskip\tw@\p@\hbox{\vrule width\textwidth height.4\p@ depth\z@}}}
+\let\@evenhead=\@oddhead
+\def\@oddfoot{\zihao{5}\hfil\thepage\hfil}
+\let\@evenfoot=\@oddfoot}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 章节设置
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{ctexheading,needspace}
 
+\ctexset{
+    % tocdepth ={subsection},
+    % secnumdepth ={subsubsection},
+    % contentsname={目\hspace{0.25cm} 录},
+    % listfigurename={\centerline {插\hspace{0.25cm} 图}},
+    % listtablename={\centerline{ 表\hspace{0.25cm} 格}},
+    % bibname = {参考文献},
+    chapter={
+        afterindent=false,
+        pagestyle={zzu@headings},
+        % break=\if@openright \else\clearpage\fi,
+        % pagestyle = myfc2,
+        name = {第,章},
+        number = \chinese{chapter},% \Roman  \arabic 
+        format = \heiti\zihao{-2}\centering,%\bfseries    %\raggedleft   \raggedright 
+        beforeskip = 1em,
+        afterskip  = 2em
+    },
+    % section={
+    %     break = \Needspace{.5\textheight},    %needspace宏包
+    %     fixskip=true ,
+    %     number =\arabic{chapter}.\arabic{section},
+    %     numberformat=\bfseries,
+    %     format = \heiti\zihao{-3},%\bfseries%\raggedleft
+    % },
+    % subsection={
+    %     fixskip=true ,
+    %     number =\arabic{chapter}.\arabic{section}.\arabic{subsection},
+    %     numberformat=\bfseries,
+    %     format = \heiti\zihao{4},%\bfseries %\raggedleft
+    %     beforeskip   = .5em plus 1ex minus .2ex,
+    %     afterskip    = .5em plus .2ex
+    % },
+    % subsubsection={
+    %     fixskip=true ,
+    %     number =\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection},
+    %     numberformat=\bfseries,
+    %     format = \heiti\zihao{-4},%\bfseries %\raggedleft
+    %     beforeskip   = 0em ,
+    %     afterskip    = 0em 
+    % },
+    % paragraph={
+    %     runin=false,
+    %     format = \bfseries \heiti\zihao{-4}%\bfseries %\raggedleft
+    % },
+    % subparagraph={
+    %     fixskip=true ,
+    %     indent=2\ccwd,
+    %     format = \bfseries \heiti\zihao{-4}%\bfseries %\raggedleft
+    % }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 中英文摘要
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\chaptermark}[1]{\@mkboth{第\chinese{chapter}\ 章  ~~#1}{}}
+\newcommand{\cabstractname}{摘\hspace{\ccwd} 要}
+\newcommand{\eabstractname}{Abstract}
+\newenvironment{cabstract}{
+    \thispagestyle{zzu@headings}
+	\hfill{\chapter*{\cabstractname}}
 }
 
 
