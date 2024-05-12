@@ -3,13 +3,14 @@
 \def\version{1.0}
 
 % ----- Ctexbook ----- %
-\LoadClass[zihao=-4,a4paper,UTF8,scheme=plain]{ctexbook}
-
+\LoadClass[zihao=-4,a4paper,UTF8,scheme=chinese,heading = true]{ctexbook}
+% 
 \RequirePackage[left=3cm,right=2cm,top=2.54cm,bottom=2.54cm]{geometry}
-
 \RequirePackage{float,setspace,lipsum,zhlipsum}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 全文字体设置
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setmainfont{Times New Roman}
-\setlength{\baselineskip}{20pt}\selectfont
 \songti
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 可选参数定义
@@ -23,6 +24,14 @@
 \DeclareOption{encover}{\TYUST@encovertrue}
 \DeclareOption{declare}{\TYUST@declaretrue}
 \ProcessOptions\relax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% XeLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{ifxetex}
+\ifxetex\else
+  \ClassError{tyust}{You should use XeLaTeX}{}
+  \end{document}
+\fi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 页眉页脚
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -216,7 +225,7 @@
 \newcommand{\bs}{\songti\zihao{4}\bf}
 \newlength{\TYUST@title@width}
 \def\TYUST@put@title#1{\makebox{\hb@xt@\TYUST@title@width{#1}}}
-
+% ----- maketitle ----- %
 \renewcommand{\maketitle}{
 \clearpage
 \thispagestyle{empty}
@@ -224,7 +233,7 @@
 \begin{minipage}{.3\textwidth}
 \vspace{-10pt}
 \noindent\begin{flushleft}
-\renewcommand\arraystretch{2}
+\renewcommand\arraystretch{1.7}
     \bfseries\jc\zihao{5}
     \setlength{\TYUST@title@width}{5em}
     \begin{tabular}{p{\TYUST@title@width}@{~~~~}l}
@@ -242,7 +251,7 @@
 \fi
 \setlength{\TYUST@title@width}{10em}
 \begin{center}
-\renewcommand\arraystretch{2}
+\renewcommand\arraystretch{1.7}
     \begin{tabular}{p{\TYUST@title@width}@{~}l}
     \ifTYUST@doctor
     \TYUST@put@title{\as\TYUST@cover@ctitle        \TYUST@cover@sep} &\UnderlineRight{8cm}{1.5mm}{\bs\TYUST@ctitle}        \\[4cm]
@@ -273,7 +282,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 章节设置
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{ctexheading,needspace}
+\RequirePackage{needspace}
 
 \ctexset{
     punct=quanjiao,%全角式：所有标点占一个汉字宽度，相邻两个标点占1.5 汉字宽度
@@ -288,27 +297,32 @@
         aftername=\hskip\ccwd,
         pagestyle={mystyle},
         name = {第,章},
-        number = \chinese{chapter},% \Roman  \arabic 
-        format = \heiti\zihao{3}\centering,%\bfseries    %\raggedleft   \raggedright 
-        beforeskip=-26pt,
+        number = \chinese{chapter},% \Roman  \arabic
+        format = \heiti\zihao{3}\centering,
+        beforeskip=-26pt,%为啥是-26,ctexbook默认50,24 = 50 - 26
         afterskip=18pt,
     },
-    % section={
-    %     break = \Needspace{.5\textheight},    %needspace宏包
-    %     fixskip=true ,
-    %     number =\arabic{chapter}.\arabic{section},
-    %     numberformat=\bfseries,
-    %     format = \heiti\zihao{-3},%\bfseries%\raggedleft
-    % },
-    % subsection={
-    %     fixskip=true ,
-    %     number =\arabic{chapter}.\arabic{section}.\arabic{subsection},
-    %     numberformat=\bfseries,
-    %     format = \heiti\zihao{4},%\bfseries %\raggedleft
-    %     beforeskip   = .5em plus 1ex minus .2ex,
-    %     afterskip    = .5em plus .2ex
-    % },
+    section={%二级标题：四号黑体,段前24 磅,段后6 磅
+        break = \Needspace{.5\textheight},
+        fixskip=true,
+        afterindent=true,
+        number =\arabic{chapter}.\arabic{section},
+        numberformat=\bfseries,
+        format = \heiti\zihao{-3},
+        beforeskip=24pt,
+        afterskip=6pt,
+    },
+    subsection={%三级标题 小四号黑体，段前12 磅，段后6 磅。
+        afterindent=true,
+        fixskip=true ,
+        number =\arabic{chapter}.\arabic{section}.\arabic{subsection},
+        numberformat=\bfseries,
+        format = \heiti\zihao{-4},
+        beforeskip   = 12pt,
+        afterskip    = 6pt,
+    },
     % subsubsection={
+        % afterindent=true,
     %     fixskip=true ,
     %     number =\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection},
     %     numberformat=\bfseries,
@@ -335,12 +349,12 @@
 \newenvironment{cabstract}{
     \chapter*{\cabstractname}
     \thispagestyle{cabstyle} 
-    \zihao{-4}\songti\setlength{\baselineskip}{20pt}\selectfont
-}{\clearpage}
+    \zihao{-4}\songti\linespread{1.55}\selectfont
+}{}
 \newenvironment{eabstract}{
     \chapter*{\eabstractname}
     \thispagestyle{eabstyle}
-    \zihao{-4}\setlength{\baselineskip}{20pt}\selectfont
+    \zihao{-4}\normalsize\linespread{1.55}\selectfont
 }{\clearpage}
 % \pagenumbering{arabic}
 % \setcounter{page}{1}
@@ -350,7 +364,6 @@
 % \renewcommand\frontmatter{\setcounter{page}{1}}
 % \renewcommand\mainmatter{\pagenumbering{arabic}\setcounter{page}{1}\@mainmatterfalse}
 % \renewcommand\backmatter{\setcounter{page}{1}}
-
 
   
 \endinput
