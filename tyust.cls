@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{tyust}[v1.0 FanChao made LaTeX Template for Graduate Thesis at Taiyuan University of Science and Technology]
+\def\TYUSTthesis{TYUSTthesis}
 \def\version{1.0}
-
 % ----- Ctexbook ----- %
 \LoadClass[zihao=-4,a4paper,UTF8,scheme=chinese,heading = true]{ctexbook}
 % 
@@ -340,12 +340,29 @@
     %     format = \bfseries \heiti\zihao{-4}%\bfseries %\raggedleft
     % }
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PDF源数据
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{hyperref}
+\hypersetup{%
+    pdftitle={\TYUST@ctitle},
+    pdfauthor={\TYUST@authors},
+    pdfsubject={\TYUST@department},
+    % pdfkeywords={\TYUST@ckeywords},
+    pdfcreator={\TYUSTthesis - v\version}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 中英文摘要
+%% 中英文摘要, 关键词
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newcommand{\cabstractname}{摘\hspace{\ccwd}要}
 \newcommand{\eabstractname}{ABSTRACT}
+% \def\TYUST@ckeywords@separator{；}
+% \def\TYUST@ekeywords@separator{; }
+\newcommand{\TYUST@ckeywords@title}{关键词：}
+\newcommand{\TYUST@ekeywords@title}{Key words:\enskip}
+
 \newenvironment{cabstract}{
     \chapter*{\cabstractname}
     \thispagestyle{cabstyle} 
@@ -354,8 +371,11 @@
 \newenvironment{eabstract}{
     \chapter*{\eabstractname}
     \thispagestyle{eabstyle}
-    \zihao{-4}\normalsize\linespread{1.55}\selectfont
-}{\clearpage}
+    \zihao{-4}\linespread{1.55}\selectfont
+}{}
+\newcommand\ckeywords[1]{\par\vspace{2ex}\noindent{\bf\TYUST@ckeywords@title} {\songti\zihao{-4} #1}}
+\newcommand\ekeywords[1]{\par\vspace{2ex}\noindent{\bf\TYUST@ekeywords@title} {\zihao{-4} #1}}
+% \vskip5pt
 % \pagenumbering{arabic}
 % \setcounter{page}{1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
