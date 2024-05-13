@@ -6,7 +6,7 @@
 \LoadClass[zihao=-4,a4paper,UTF8,scheme=chinese,heading = true]{ctexbook}
 % 
 \RequirePackage[left=3cm,right=2cm,top=2.54cm,bottom=2.54cm]{geometry}
-\RequirePackage{float,setspace,lipsum,zhlipsum}
+\RequirePackage{float,setspace,lipsum,zhlipsum,mwe,graphicx,booktabs,longtable,makecell,calc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 全文字体设置
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,11 +33,18 @@
   \end{document}
 \fi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 文前，正文，文后格式
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \renewcommand\frontmatter{\setcounter{page}{1}}
+% \renewcommand\mainmatter{\pagenumbering{arabic}\setcounter{page}{1}\@mainmatterfalse}
+% \renewcommand\backmatter{\setcounter{page}{1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 页眉页脚
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\fc}{\songti\zihao{5}}
 \RequirePackage{fancyhdr}
-\fancypagestyle{cabstyle}{%中文摘要页眉页脚
+\fancypagestyle{cabstyle}{%中文摘要
     \fancyhf{}
     \fancyhead[CO]{\fc 摘\hspace{\ccwd}要} % 奇数页 页眉 中
     \fancyhead[CE]{\fc\TYUST@ctitle} % 偶数页 页眉 中
@@ -45,13 +52,29 @@
     % \renewcommand{\headrulewidth}{0.5pt} % 设置页眉下方横线的粗细为0.5pt
     % \renewcommand{\footrulewidth}{0pt} % 页脚上方无横线
 }
-\fancypagestyle{eabstyle}{%英文摘要页眉页脚
+\fancypagestyle{eabstyle}{%英文摘要
     \fancyhf{}
-    \fancyhead[CO]{\fc ABSTRACT} % 奇数页 页眉 中
-    \fancyhead[CE]{\fc\TYUST@ctitle} % 偶数页 页眉 中
-    \fancyfoot[C]{\fc\thepage} % 页脚 中
-    % \renewcommand{\headrulewidth}{0.5pt} % 设置页眉下方横线的粗细为0.5pt
-    % \renewcommand{\footrulewidth}{0pt} % 页脚上方无横线
+    \fancyhead[CO]{\fc ABSTRACT} %
+    \fancyhead[CE]{\fc\TYUST@ctitle}
+    \fancyfoot[C]{\fc\thepage}
+}
+\fancypagestyle{content}{%目录
+    \fancyhf{}
+    \fancyhead[CO]{\fc 目\hspace{\ccwd}录}
+    \fancyhead[CE]{\fc\TYUST@ctitle}
+    \fancyfoot[C]{\fc\thepage}
+}
+\fancypagestyle{figcontent}{%插图清单
+    \fancyhf{}
+    \fancyhead[CO]{\fc 插图清单}
+    \fancyhead[CE]{\fc\TYUST@ctitle}
+    \fancyfoot[C]{\fc\thepage}
+}
+\fancypagestyle{tabcontent}{%表格清单
+    \fancyhf{}
+    \fancyhead[CO]{\fc 表格清单} 
+    \fancyhead[CE]{\fc\TYUST@ctitle}
+    \fancyfoot[C]{\fc\thepage}
 }
 \fancypagestyle{mystyle}{%正文页眉页脚
     \fancyhf{}
@@ -71,10 +94,8 @@
 \def\TYUST@cover@classn{分类号}
 \def\TYUST@cover@schoolc{学校代码}
 \def\TYUST@cover@sclass{密级}
-
 \def\TYUST@cover@ctitle{学位论文题目}
 \def\TYUST@cover@etitle{英文题目}
-
 \def\TYUST@cover@authors{研究生姓名}
 \def\TYUST@cover@supervisor{导师姓名及职称}
 \def\TYUST@cover@department{培养单位}
@@ -82,7 +103,6 @@
 \def\TYUST@cover@subdate{论文提交日期}
 \def\TYUST@cover@reportdate{论文答辩日期}
 \def\TYUST@cover@chairman{答辩委员会主席}
-
 % ----- 固定长度带下划线 ----- %
 \RequirePackage{adjustbox}
 \newlength\myheight
@@ -128,7 +148,6 @@
 \TYUST@def@term{eschool}
 \TYUST@def@term{esupervisor}
 \TYUST@def@term{edate}
-
 % ----- 硕士封面中间 ----- %
 % \newCJKfontfamily\bkaishu{方正楷体简体}[BoldFont=方正粗楷简体]
 % \setCJKfamilyfont{zhsong}[AutoFakeBold = {5}]{SimSun}
@@ -158,10 +177,11 @@
         \vspace{3.4cm}
     \end{center}%
 }
-
 % ----- 博士英文封面 ----- %
 \newcommand{\doctorengcover}{
 \clearpage
+\setstretch{1}
+\setlength{\parskip}{1pt}
 \thispagestyle{empty}
     \vspace*{.5cm}
     \begin{center}
@@ -191,6 +211,7 @@
 \newcommand{\authorizationcover}{
 \thispagestyle{empty}
 \setstretch{1.8}
+\setlength{\parskip}{1pt}
 \begin{center}
     \vspace*{.5cm}
     \heiti\zihao{3}学位论文原创性声明
@@ -208,7 +229,7 @@
 \vspace*{.8cm}
 \hspace{2\ccwd}本人完全了解并同意遵守太原科技大学有关保存和使用学位论文的规定，即太原科技大学有权保留送交学位论文的副本，允许该论文被查阅，
 可以按照学术研究公开原则和保护知识产权的原则公布该论文的全部或部分内容，可以采用影印、缩印或其他复制手段保存、汇编本学位论文。\par
-\hspace{2\ccwd}涉密及延迟公开的学位论文在解密或延迟期后适用本声明。\par
+涉密及延迟公开的学位论文在解密或延迟期后适用本声明。\par
 \vspace*{1cm}
 \noindent 作者签名：\hspace{11\ccwd}导师签名：\hspace{11\ccwd}\par
 \noindent 日\hspace{2\ccwd} 期：\hspace{2.5\ccwd} 年\hspace{1.5\ccwd} 月\hspace{1.5\ccwd} 日\hspace{1.25\ccwd}
@@ -216,11 +237,7 @@
 \clearpage
 \thispagestyle{empty}
 }
-% \ifTYUST@doctor
-% ...
-% \else
-% ..
-% \fi
+% ----- maketitle ----- %
 \newcommand{\as}{\songti\zihao{4}\bf}
 \newcommand{\bs}{\songti\zihao{4}\bf}
 \newlength{\TYUST@title@width}
@@ -228,6 +245,8 @@
 % ----- maketitle ----- %
 \renewcommand{\maketitle}{
 \clearpage
+\setstretch{1.2}
+\setlength{\parskip}{1pt}
 \thispagestyle{empty}
 \noindent
 \begin{minipage}{.3\textwidth}
@@ -278,20 +297,21 @@
 \ifTYUST@declare
 \authorizationcover
 \else\fi}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 章节设置
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{needspace}
-
 \ctexset{
     punct=quanjiao,%全角式：所有标点占一个汉字宽度，相邻两个标点占1.5 汉字宽度
-    % tocdepth ={subsection},
-    % secnumdepth ={subsubsection},
-    % contentsname={目\hspace{0.25cm} 录},
-    % listfigurename={\centerline {插\hspace{0.25cm} 图}},
-    % listtablename={\centerline{ 表\hspace{0.25cm} 格}},
-    % bibname = {参考文献},
+    tocdepth ={subsection},
+    contentsname={目\hspace{\ccwd}录},
+    listfigurename={插图清单},
+    listtablename={表格清单},
+    figurename={图},
+    tablename={表},
+    appendixname={附录},
+    bibname={参考文献},
+    proofname={证明},
     chapter={%一级标题：黑体3号，段前24磅，段后18磅
         afterindent=true,
         aftername=\hskip\ccwd,
@@ -320,42 +340,23 @@
         format = \heiti\zihao{-4},
         beforeskip   = 12pt,
         afterskip    = 6pt,
-    },
-    % subsubsection={
-        % afterindent=true,
-    %     fixskip=true ,
-    %     number =\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection},
-    %     numberformat=\bfseries,
-    %     format = \heiti\zihao{-4},%\bfseries %\raggedleft
-    %     beforeskip   = 0em ,
-    %     afterskip    = 0em 
-    % },
-    % paragraph={
-    %     runin=false,
-    %     format = \bfseries \heiti\zihao{-4}%\bfseries %\raggedleft
-    % },
-    % subparagraph={
-    %     fixskip=true ,
-    %     indent=2\ccwd,
-    %     format = \bfseries \heiti\zihao{-4}%\bfseries %\raggedleft
-    % }
+    }
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% PDF源数据
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{hyperref}
 \hypersetup{%
+    hidelinks,
     pdftitle={\TYUST@ctitle},
     pdfauthor={\TYUST@authors},
     pdfsubject={\TYUST@department},
     % pdfkeywords={\TYUST@ckeywords},
     pdfcreator={\TYUSTthesis - v\version}
 }
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 中英文摘要, 关键词
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \newcommand{\cabstractname}{摘\hspace{\ccwd}要}
 \newcommand{\eabstractname}{ABSTRACT}
 % \def\TYUST@ckeywords@separator{；}
@@ -373,17 +374,120 @@
     \thispagestyle{eabstyle}
     \zihao{-4}\linespread{1.55}\selectfont
 }{}
-\newcommand\ckeywords[1]{\par\vspace{2ex}\noindent{\bf\TYUST@ckeywords@title} {\songti\zihao{-4} #1}}
-\newcommand\ekeywords[1]{\par\vspace{2ex}\noindent{\bf\TYUST@ekeywords@title} {\zihao{-4} #1}}
-% \vskip5pt
-% \pagenumbering{arabic}
-% \setcounter{page}{1}
+\newcommand\ckeywords[1]{
+    \par\vspace{2ex}\noindent 
+    \parbox[t]{\linewidth}{
+    \linespread{1.55}\songti\zihao{-4}{\bf\TYUST@ckeywords@title} #1}
+    }
+\newcommand\ekeywords[1]{
+    \par\vspace{2ex}\noindent 
+    \parbox[t]{\linewidth}{
+    \linespread{1.5}\zihao{-4}{\bf\TYUST@ekeywords@title}  #1}
+    }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 文前，正文，文后格式
+%% 目录及图表清单
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \renewcommand\frontmatter{\setcounter{page}{1}}
-% \renewcommand\mainmatter{\pagenumbering{arabic}\setcounter{page}{1}\@mainmatterfalse}
-% \renewcommand\backmatter{\setcounter{page}{1}}
+\RequirePackage{titletoc}
+\renewcommand\tableofcontents{
+  \chapter*{\contentsname}
+  \@starttoc{toc}\normalsize}
+\renewcommand\listoffigures{
+  \chapter*{\listfigurename}
+  \@starttoc{lof}}
+\renewcommand\listoftables{%
+  \chapter*{\listtablename}
+  \@starttoc{lot}}
+\titlecontents{chapter}[\z@]{\vspace{-5pt}\zihao{-4}\songti\thispagestyle{content}}
+  {{\thecontentslabel}\hspace{1ex}}{}
+  {\hspace{.5em}\titlerule*[8pt]{.}\zihao{-4}\contentspage}
+\titlecontents{section}[2\ccwd]{\vspace{-8pt} \zihao{-4}\songti\thispagestyle{content}}
+  {\thecontentslabel\hspace{1ex}}{}
+  {\hspace{.5em}\titlerule*[8pt]{.}\zihao{-4}\contentspage}
+\titlecontents{subsection}[4\ccwd]{\vspace{-8pt}\zihao{-4}\songti\thispagestyle{content}}
+  {\thecontentslabel\hspace{1ex}}{}
+  {\hspace{.5em}\titlerule*[8pt]{.}\zihao{-4}\contentspage}
+\titlecontents{figure}[\z@]{\vspace{-8pt}\zihao{-4}\songti\thispagestyle{figcontent}}
+  {\makebox[3.5em][l]{\figurename~\thecontentslabel\quad}}{}
+  {\hspace{.5em}\titlerule*[8pt]{.}\zihao{-4}\songti\contentspage}
+\titlecontents{table}[\z@]{\vspace{-8pt}\zihao{-4}\songti\thispagestyle{tabcontent}}
+  {\makebox[3.5em][l]{\tablename~\thecontentslabel\quad}}{}
+  {\hspace{.5em}\titlerule*[8pt]{.}\zihao{-4}\songti\contentspage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 图片 表格 双语名称
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{caption}
+\RequirePackage[list=false]{subcaption}% 子图也加入llistoffigures list=true
+\RequirePackage[list=off]{bicaption}% 第一个标题加入 listoffigures
 
-  
+\DeclareCaptionFont{kai}{\kaishu}
+\DeclareCaptionFont{minusfour}{\zihao{5}}
+\captionsetup[figure]{
+    labelsep=space,
+    font={minusfour,kai},
+    skip=20pt,
+    position=auto,
+    % aboveskip=6pt,
+    belowskip=-17pt,
+}
+\captionsetup[subfigure]{
+    labelsep=space,
+    font={minusfour,kai},
+    skip=10pt,
+    position=auto,
+}
+\captionsetup[table]{
+    labelsep=space,
+    font={minusfour,kai},
+    aboveskip=6pt,
+    belowskip=-10pt
+    }
+% \setlength{\belowcaptionskip}{-1cm}
+% \captionsetup[figure][bi-first]{name=图}
+\captionsetup[figure][bi-first]{labelsep=space,font={minusfour,kai}}
+\captionsetup[figure][bi-second]{labelsep=space,name=Fig.,font={minusfour}}
+\captionsetup[subfigure][bi-first]{labelsep=space,font={minusfour,kai}}
+\captionsetup[subfigure][bi-second]{labelsep=space,font={minusfour}}
+% \captionsetup[table][bi-first]{name=表}
+\captionsetup[table][bi-first]{labelsep=space,font={minusfour,kai}}
+\captionsetup[table][bi-second]{labelsep=space,name=Table,font={minusfour}}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% 主要符号对照表
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[shortlabels]{enumitem}
+\newcommand{\denotationname}{主要符号对照表}
+\newenvironment{denotation}[1][2.5cm]{
+\cleardoublepage
+\chapter*{\denotationname}
+\noindent\begin{list}{}{
+    \renewcommand\makelabel[1]{##1\hfil}
+    \setlength{\labelwidth}{#1}%标签盒子宽度
+    \setlength{\labelsep}{0.5cm}%标签与列表文本距离
+    \setlength{\itemindent}{0cm}%标签缩进量
+    \setlength{\leftmargin}{\labelwidth + \labelsep}%左边界
+    \setlength{\rightmargin}{0cm}
+    \setlength{\parsep}{-.1cm}%段落间距
+    \setlength{\itemsep}{0cm}%标签间距
+    \setlength{\listparindent}{0cm}%段落缩进量
+    \setlength{\topsep}{\z@}%标签与上文的间距
+    \setlength{\listparindent}{0cm}
+    \setlength{\baselineskip}{20pt}
+}}{\end{list}}
+% \newenvironment{denotation}[1][2.5cm]{
+% \cleardoublepage
+%   \chapter*{\denotationname}
+%   \noindent\begin{list}{}%
+%     {
+    % \vskip-30bp\zihao{-4}\songti%宋体四号
+%      \renewcommand\makelabel[1]{##1\hfil}
+%      \setlength{\labelwidth}{#1}%标签盒子宽度
+%      \setlength{\labelsep}{0.5cm}%标签与列表文本距离
+%      \setlength{\itemindent}{0cm}%标签缩进量
+%      \setlength{\leftmargin}{\labelwidth+\labelsep}%左边界
+%      \setlength{\rightmargin}{0cm}
+%      \setlength{\parsep}{0cm}%段落间距
+%      \setlength{\itemsep}{0cm}%标签间距
+%     \setlength{\listparindent}{0cm}%段落缩进量
+%     \setlength{\topsep}{\z@}%标签与上文的间距
+%    }}{\end{list}}
+
 \endinput

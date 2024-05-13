@@ -1,48 +1,27 @@
 \documentclass[doctor,encover,declare]{tyust}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 可选参数：
-%% master    -- 硕士论文封面
+%% master    -- 硕士论文封面   (default)
 %% doctor    -- 博士论文中文封面
 %% encover   -- 博士论文英文封面
 %% declare   -- 声明页
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\usepackage[showframe]{fgruler}
-\classn{T P 3 9 1}%必须敲空格实现俩端对齐
-\schoolc{1 0 1 0 9}%必须敲空格实现俩端对齐
-\sclass{公开}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ---------------- 论文封面信息 ----------------- 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ctitle{太原科技大学硕士论文 \LaTeX 模板使用示例}
-\etitle{Example of Using the Master's Thesis \LaTeX Template for Taiyuan University of Science and Technology}
-\authors{樊超}
-\supervisor{王帆 副教授}
-\department{电子信息工程学院}
-\major{控制科学与工程}
-\subdate{2024年5月}
-\reportdate{2024年5月1日}
-\chairman{某某 教授}
-\type{学术型}% 硕士论文需要这个信息
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ------------- 博士论文英文封面信息 ------------- 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\eauthors{English name}
-\emajor{Control Science and Engineering}
-\edepartment{School of Electronic Infromation Engineering}
-\eschool{Taiyuan University of Science and Technology}
-\esupervisor{导师英文姓名}
-\edate{6.3,2023}
-
+\usepackage[showframe]{fgruler}
 
 \begin{document}
 % ----- 封面 ----- %
+\input{chapter/coverinfor} %封面信息
 \maketitle
-
 % ----- 摘要 ----- %
 \frontmatter
 \input{chapter/abstract}
-% ----- 正文部分 ----- %
+% ----- 目录 ----- %
+\tableofcontents  %目录
+\listoffigures    %插图清单
+\listoftables     %表格清单
+\input{chapter/denotation}%主要符号对照表
 \mainmatter
+% ----- 正文 ----- %
 \input{chapter/chapter01}
 
 %\backmatter
