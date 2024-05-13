@@ -7,6 +7,7 @@
 % 
 \RequirePackage[left=3cm,right=2cm,top=2.54cm,bottom=2.54cm]{geometry}
 \RequirePackage{float,setspace,lipsum,zhlipsum,mwe,graphicx,booktabs,longtable,makecell,calc}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 全文字体设置
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -85,7 +86,7 @@
     % \renewcommand{\footrulewidth}{0pt} % 页脚上方无横线
 }
 \pagestyle{mystyle}
-\renewcommand{\chaptermark}[1]{\@mkboth{第\chinese{chapter}\ 章  ~~#1}{}}
+\renewcommand{\chaptermark}[1]{\@mkboth{第\chinese{chapter}章~~#1}{}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 封面
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -450,9 +451,9 @@
 % \captionsetup[table][bi-first]{name=表}
 \captionsetup[table][bi-first]{labelsep=space,font={minusfour,kai}}
 \captionsetup[table][bi-second]{labelsep=space,name=Table,font={minusfour}}
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %% 主要符号对照表
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 主要符号对照表
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[shortlabels]{enumitem}
 \newcommand{\denotationname}{主要符号对照表}
 \newenvironment{denotation}[1][2.5cm]{
@@ -472,22 +473,149 @@
     \setlength{\listparindent}{0cm}
     \setlength{\baselineskip}{20pt}
 }}{\end{list}}
-% \newenvironment{denotation}[1][2.5cm]{
-% \cleardoublepage
-%   \chapter*{\denotationname}
-%   \noindent\begin{list}{}%
-%     {
-    % \vskip-30bp\zihao{-4}\songti%宋体四号
-%      \renewcommand\makelabel[1]{##1\hfil}
-%      \setlength{\labelwidth}{#1}%标签盒子宽度
-%      \setlength{\labelsep}{0.5cm}%标签与列表文本距离
-%      \setlength{\itemindent}{0cm}%标签缩进量
-%      \setlength{\leftmargin}{\labelwidth+\labelsep}%左边界
-%      \setlength{\rightmargin}{0cm}
-%      \setlength{\parsep}{0cm}%段落间距
-%      \setlength{\itemsep}{0cm}%标签间距
-%     \setlength{\listparindent}{0cm}%段落缩进量
-%     \setlength{\topsep}{\z@}%标签与上文的间距
-%    }}{\end{list}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 参考文献
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[numbers]{gbt7714}
+\bibpunct{[}{]}{,}{s}{}{,}
+\renewcommand\NAT@citesuper[3]{\ifNAT@swa%
+  \unskip\kern\p@\textsuperscript{\NAT@@open #1\NAT@@close}%
+  \if*#3*\else\ (#3)\fi\else #1\fi\endgroup}
+\DeclareRobustCommand\onlinecite{\@onlinecite}
+\def\@onlinecite#1{\begingroup\let\@cite\NAT@citenum\citep{#1}\endgroup}
+\renewenvironment{thebibliography}[1]{%
+   \chapter*{\bibname}%
+   \zihao{-4}\linespread{1.5}
+   \addcontentsline{toc}{chapter}{\bibname}
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\renewcommand{\makelabel}[1]{##1\hfill}
+         \settowidth\labelwidth{1.1cm}
+         \setlength{\labelsep}{0.4em}
+         \setlength{\itemindent}{\z@}
+         \setlength{\leftmargin}{\labelwidth+\labelsep}
+         \addtolength{\itemsep}{-0.7em}
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+    \sloppy\frenchspacing
+    \clubpenalty4000
+    \@clubpenalty \clubpenalty
+    \widowpenalty4000%
+    \interlinepenalty4000%
+    \sfcode`\.\@m}
+   {\def\@noitemerr
+     {\@latex@warning{Empty `thebibliography' environment}}%
+    \endlist\frenchspacing}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 攻读学位期间取得的学术成果
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TYUST@achievement@title}{攻读学位期间取得的学术成果}
+\newenvironment{achievement}[1][\TYUST@achievement@title]{%
+  \clearpage\chapter*{#1}
+  \addcontentsline{toc}{chapter}{攻读学位期间取得的学术成果}
+  }{\clearpage}
+\newlist{mychineselist}{enumerate}{1}
+\setlist[mychineselist,1]{label=\chinese{mychineselisti}、, font=\bfseries}
+% \newcommand{\achievementitem}[1]{{\zihao{-4}\sffamily{#1}}\vspace{.5em}\par}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 致谢
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TYUST@ackname}{致\hspace{\ccwd} 谢}
+\newenvironment{ack}{%
+    \chapter*{\TYUST@ackname}
+    \addcontentsline{toc}{chapter}{致谢}
+    \songti\zihao{-4}
+  }{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 附录
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewenvironment{appendix}{
+	\setcounter{equation}{0}
+	\setcounter{table}{0}
+	\setcounter{figure}{0}
+	\setcounter{chapter}{0}
+	\renewcommand {\thefigure}{\thechapter\arabic{figure}}
+	\renewcommand {\theequation}{\thechapter\arabic{equation}}
+	\renewcommand {\thetable} {\thechapter{}\arabic{table}}
+	\ctexset{
+		% chapter={
+		% 	fixskip=true ,
+		% 	numberformat=\bfseries,
+		% 	name = {附录},
+		% 	number = \Alph{chapter},
+        %     format = \heiti\zihao{3}\centering,
+        %     beforeskip=24pt,
+        %     afterskip=18pt,
+		% },
+		section={
+            break = \Needspace{.5\textheight},
+            fixskip=true,
+            afterindent=true,
+            name = {附录},
+			number = \Alph{section},
+            numberformat=\bfseries,
+            format = \heiti\zihao{-3},
+            beforeskip=12pt,
+            afterskip=6pt,
+		},
+		subsection={
+            afterindent=true,
+            fixskip=true ,
+			numberformat=\bfseries,
+			number = \arabic{section}.\arabic{subsection},
+			format = \heiti\zihao{-4},
+            beforeskip   = 12pt,
+            afterskip    = 6pt,
+		}
+	}
+}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 代码环境(只是为了写说明文档)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{tikz,tcolorbox,listings}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{frenchplum}{RGB}{190,20,83}
+\lstset{
+	frame=tb,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	framerule=1pt,
+	rulecolor=\color{gray!35},
+	backgroundcolor=\color{gray!5},
+	basicstyle={\small\ttfamily},
+	%numbers=none,  
+	numbers=left,  
+	numberstyle=\footnotesize\color{black},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3,
+	%firstnumber=last,   %连续编号
+	commentstyle=\color{gray!50!black!50},
+	emph={main,none,fontenc,fontspec,xeCJK,FiraMono,xunicode,newtxmath,figure,fig,image,img,table,
+	itemize,enumerate,newtxtext,newtxtt,ctex,microtype,description,times,newtx,booktabs,tabular,
+	PDFLaTeX,XeLaTeX,type1cm,BibTeX,device,color,mode,lang,amsthm,tcolorbox,titlestyle,cite,
+	marginnote,ctex,listings},
+	emphstyle={\color{frenchplum}},
+	morekeywords={begin,main,DeclareSymbolFont,SetSymbolFont,toprule,midrule,bottomrule,institute,
+		version,includegraphics,setmainfont,setsansfont,setmonofont,setCJKmainfont,setCJKsansfont,
+		setCJKmonofont,RequirePackage,figref,tabref,email,maketitle,keywords,definecolor,extrainfo,
+		logo,cover,subtitle,appendix,chapter,hypersetup,mainmatter,tableofcontents,elegantpar,
+		numbers,authoryear,heiti,kaishu,lstset,pagecolor,zhnumber,marginpar,part,equote
+	},
+}
+\tcbuselibrary{listings}
+\tcbuselibrary{xparse}
+\DeclareTotalTCBox{\myverb}{ v }{verbatim,
+	on line,
+	arc=3pt,colframe=red!75!black,colupper=blue,before upper={\rule[-3pt]{0pt}{12pt}},
+	boxsep=1mm,left=0pt,right=0pt,top=0pt,bottom=0pt,
+	boxrule=0pt,bottomrule=0.1pt,toprule=0.1pt}{#1}
 \endinput

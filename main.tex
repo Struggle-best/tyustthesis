@@ -9,20 +9,28 @@
 \usepackage[showframe]{fgruler}
 
 \begin{document}
-% ----- 封面 ----- %
-\input{chapter/coverinfor} %封面信息
+\input{chapter/coverinfor} %封面
 \maketitle
-% ----- 摘要 ----- %
 \frontmatter
-\input{chapter/abstract}
-% ----- 目录 ----- %
-\tableofcontents  %目录
-\listoffigures    %插图清单
-\listoftables     %表格清单
+\input{chapter/abstract}%摘要
+\tableofcontents   %目录
+%\listoffigures    %插图清单
+%\listoftables     %表格清单
 \input{chapter/denotation}%主要符号对照表
+
+% ---------- 正文 --------- %
 \mainmatter
-% ----- 正文 ----- %
 \input{chapter/chapter01}
+
+\bibliography{ref/references.bib}%参考文献
+% ---------- 附录 --------- %
+%\begin{appendix}
+%	\input{chapter/appendices}
+%\end{appendix}
+\backmatter
+
+\input{chapter/achievement}%学术成果
+\input{chapter/acknowledgement}%致谢
 
 %\backmatter
 \end{document}
