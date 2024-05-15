@@ -1,4 +1,7 @@
-\documentclass[doctor,encover,declare]{tyust}
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+%\documentclass[doctor,encover,declare]{TYUSTthesis}
+\documentclass[master,encover,declare]{TYUSTthesis}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 可选参数：
 %% master    -- 硕士论文封面   (default)
@@ -6,31 +9,32 @@
 %% encover   -- 博士论文英文封面
 %% declare   -- 声明页
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[showframe]{fgruler}
-
+%% Author : Fanchao - fanchao11429@163.com
+%% Created: 2024-5-15
+%%================================================
 \begin{document}
-\input{chapter/coverinfor} %封面
-\maketitle
+\input{chapter/01coverinfor}
+\maketitle %封面
+% ---------- 前文 --------- %
 \frontmatter
-\input{chapter/abstract}%摘要
+\input{chapter/02abstract}%摘要
 \tableofcontents   %目录
 %\listoffigures    %插图清单
 %\listoftables     %表格清单
-\input{chapter/denotation}%主要符号对照表
+%\input{chapter/03denotation}%主要符号对照表
 
 % ---------- 正文 --------- %
 \mainmatter
-\input{chapter/chapter01}
-
-\bibliography{ref/references.bib}%参考文献
+\input{chapter/04chapter1}
+\input{chapter/05chapter2}
+\input{chapter/06chapter3}
+\bibliography{chapter/13references.bib}%参考文献
 % ---------- 附录 --------- %
 %\begin{appendix}
-%	\input{chapter/appendices}
+%	\input{chapter/10appendices}
 %\end{appendix}
 \backmatter
 
-\input{chapter/achievement}%学术成果
-\input{chapter/acknowledgement}%致谢
-
-%\backmatter
+\input{chapter/11achievement}%学术成果
+\input{chapter/12acknowledgement}%致谢
 \end{document}

@@ -1,0 +1,130 @@
+% !TEX root = main.tex
+\zihao{-4}\linespread{1.55}\selectfont
+\chapter{模板使用说明}
+\section{背景}
+作者将要写毕业论文，发现学校并没有研究生毕业论文的\LaTeX 模板，因此根据\href{https://yjsxy.tyust.edu.cn/info/1172/3275.html}{《太原科技大学研究生学位论文格式的统一要求》}（以下简称《要求》）开发了一个研究生\LaTeX 毕业论文模板。TYUSTthesis(Taiyuan University of Science and Technology thesis)以\myverb{ctexbook}文档类为基础，以基本满足“要求”。但该模板并非官方模板，且不同学院或老师有不同要求，遇到问题请反馈。本模板部分格式参考
+\href{https://github.com/tuxify/zzuthesis}{《郑州大学本科毕业设计(论文)和研究生学位论文(含 硕士和博士) LaTeX 模版》}
+
+本项目Github 地址\faGithub :\href{https://github.com/Struggle-best/TYUST_thesis}{ \;\;https://github.com/Struggle-best/TYUST\_thesis}
+
+邮箱：\href{fanchao11429@163.com}{fanchao11429@163.com}
+
+本模板使用\TeX Live2022编译通过。\footnote{软件安装见：\url{http://tug.org/texlive/acquire.html}}
+\section{文件结构}
+本文档通过\textbf{main.tex} 文件\myverb{\input{ }}命令加入各个章节，\textbf{main.tex}内容如下，各部分按需加入自己文档。
+
+\begin{lstlisting}
+\begin{document}
+\input{chapter/01coverinfor} %封面
+\maketitle%封面
+% ---------- 前文 --------- %
+\frontmatter
+\input{chapter/02abstract}%摘要
+\tableofcontents   %目录
+%\listoffigures    %插图清单
+%\listoftables     %表格清单
+\input{chapter/03denotation}%主要符号对照表
+
+% ---------- 正文 --------- %
+\mainmatter
+\input{chapter/04chapter1}
+
+\bibliography{chapter/13references.bib}%参考文献
+% ---------- 附录 --------- %
+%\begin{appendix}
+%	\input{chapter/10appendices}
+%\end{appendix}
+\backmatter
+
+\input{chapter/11achievement}%学术成果
+\input{chapter/12acknowledgement}%致谢
+\end{document}
+\end{lstlisting}
+\section{文件夹组成}
+文件夹组成如下：
+
+\begin{forest}
+	pic dir tree,
+	where level=0{}{directory,
+	},
+	[文件夹
+	[chapter
+	[01coverinfor.tex {\color{gray}论文封面信息},file2
+	]
+	[02abstract.tex {\color{gray}摘要},file2
+	]
+	[03denotation.tex {\color{gray}主要符号对照表（可取消）},file2
+	]
+	[04chapter1.tex {\color{gray}第一章},file2
+	]
+	[10appendices.tex {\color{gray}附录（可取消）},file2
+	]
+	[11achievement.tex {\color{gray}攻读学位期间取得的学术成果},file2
+	]
+	[12acknowledgement.tex {\color{gray}致谢},file2
+	]
+	[13references.tex {\color{gray}参考文献},file2
+	]
+	]
+	[figure
+	[logo {\color{gray}封面logo}
+	]
+	[page2.png {\color{gray}论文图片存放}, file
+	]
+	[..., file
+	]
+	]
+	[main.tex {\color{gray}主文件},file2
+	]
+	[TYUSTthesis.cls {\color{gray}模板格式文件},file2
+	]
+	]
+\end{forest}
+
+\section{参数说明}
+本文档结合了硕士与博士学位论文模板，因此在加载TYUSTthesis文档类时有三个可选参数：
+\begin{itemize}
+	\item master 硕士学位论文（default）
+	\item doctor 博士学位论文
+	\item encover 博士学位论文英文封面
+	\item declare 学位论文原创说明与授权说明
+\end{itemize}
+
+例如你想使用硕士论文并包含授权页，可使用下边命令
+\begin{lstlisting}
+\documentclass[master,declare]{TYUSTthesis}
+\end{lstlisting}
+
+你若想使用博士论文并包含英文封面，可使用下边命令
+\begin{lstlisting}
+\documentclass[doctor,encover]{TYUSTthesis}
+\end{lstlisting}
+\section{预加载宏包}
+\begin{table}[hp]
+	\renewcommand\arraystretch{1.2}
+	\centering  % 显示位置为中间
+	\bicaption{预加载宏包}{Preloaded macro package}\label{tab:1}
+	\begin{tabular}{ll||ll} %第一列设置宽度为45pt 全为左对齐 没有分割线
+		\hline
+		宏包 		&说明		    & 宏包 	   & 说明     \\
+		\hline 
+		geometry  &页边距	     &gbt7714	  &参考文献格式 \\
+		float	  &浮动体	     &setspace	  & 设置间距  \\
+		mwe 	  &提供示例图片  & graphicx  & 插图       \\
+		booktabs  &三线表       & longtable &长表格      \\
+		makecell   &表格内容换行 & calc      & 距离计算   \\
+		fontawesome& 字体       & multirow  & 合并单元格  \\
+		mhchem     &化学环境     &chemfig   &化学环境     \\
+		amsmath    &数学环境    &amsthm     &数学环境     \\
+		amssymb    &数学环境    &amsfonts   &数学环境     \\
+		hyperref   & 超链接    &enumitem    &列表         \\
+		titletoc   & 目录设置  &setspace     &设置间距    \\
+		caption    & 图表标题  &tikz        &画图         \\
+		subcaption & 图表标题  &tcolorbox   & 彩色盒子   \\
+		bicaption &  图表标题  &listings    & 代码环境    \\
+		marginnote&  边注      &forest      &             \\
+		xparse    &  边注      &zhlipsum    &             \\
+        lipsum    &            &needspace  &              \\
+		\hline
+	\end{tabular}
+\end{table}

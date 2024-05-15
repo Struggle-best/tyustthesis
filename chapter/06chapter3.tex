@@ -1,0 +1,434 @@
+% !TEX root = main.tex
+\chapter{各环境介绍}
+本章介绍各种环境实现，并把代码附后。
+\section{插图}
+\subsection{单幅图}
+\begin{figure}[H]
+\centering
+\includegraphics[width=.3\textwidth]{Ch2}
+\bicaption{单幅图}{single image}\label{fig：1}
+\end{figure}
+\begin{lstlisting}[language=TeX]
+\begin{figure}[H]%可选htbp
+	\centering
+	\includegraphics[width=.3\textwidth]{Ch2}
+	\bicaption{单幅图}{single image}\label{fig：1}
+\end{figure}
+\end{lstlisting}
+
+图片与表格可选参数
+
+\begin{itemize}
+	\item H 就在当前位置不动。
+	\item h 当前位置。将图形放置在正文文本中给出该图形环境的地方。如果本页所剩的页面不够，这一参数将不起作用。
+	\item t 顶部。将图形放置在页面的顶部。
+	\item b 底部。将图形放置在页面的底部。
+	\item p 浮动页。将图形放置在一只允许有浮动对象的页面上。
+\end{itemize}
+
+\subsection{多图带子标题+长标题}
+\begin{figure}[htp]
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{example-image}
+		\bisubcaption{中文标题}{English title}\label{fig:2-1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{example-image}
+		\bisubcaption{中文标题}{English title}\label{fig:2-2}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{example-image}
+		\bisubcaption{中文标题}{English title}\label{fig:2-3}
+	\end{subfigure}
+	\bicaption{第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字}{English title}\label{fig:2}
+\end{figure}
+\vspace{.5cm}
+
+\begin{lstlisting}[language=TeX]
+\begin{figure}[htp]
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{example-image}
+		\bisubcaption{中文标题}{English title}\label{fig:2-1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{example-image}
+		\bisubcaption{中文标题}{English title}\label{fig:2-2}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{example-image}
+		\bisubcaption{中文标题}{English title}\label{fig:2-3}
+	\end{subfigure}
+	\bicaption{第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字第二个图名字}{English title}\label{fig:2}
+\end{figure}
+\end{lstlisting}
+
+\subsection{图引用}
+引用： 图\ref{fig：1}。 引用图 2 的第一个子图：\ref{fig:2-1}。 引用： 图 \ref{fig:2}。
+\begin{lstlisting}
+引用图\ref{fig：1} 引用图 2 第一个子图\ref{fig:2-1} 引用图 2 \ref{fig:2}
+\end{lstlisting}
+\section{表}
+表格制作工具\footnote{推荐俩个表格工具或网站\begin{itemize}
+		\item \textbf{\href{www.tablesgenerator.com}{在线表格生成}\;：}在线编辑表格并转化为\LaTeX 代码
+		\item \textbf{\href{https://www.ctan.org/tex-archive/support/excel2latex/}{Excel 2\LaTeX}\;：
+		}Excel插件，可以将Excel表格转化为\LaTeX 代码
+\end{itemize}}2
+\subsection{三线表}
+\begin{table}[H]
+	\centering
+	\bicaption{第一个表名字}{English title}\label{tab：1}
+	\begin{tabular}{ccc}
+		\toprule
+		呵呵&    &   \\
+		\midrule
+		&    &   \\
+		\midrule
+		&    &   \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\begin{lstlisting}[language=TeX]
+\begin{table}[H]
+	\centering
+	\bicaption{第一个表名字}{English title}\label{tab：1}
+	\begin{tabular}{ccc}
+		\toprule
+		呵呵&    &   \\
+		\midrule
+		&    &   \\
+		\midrule
+		&    &   \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\end{lstlisting}
+
+\subsection{单元格合并}
+\begin{table}[H]
+\bicaption{单元格合并演示}{Cell merge demonstration}\label{tab:hebing}
+\begin{tabular}{cccccc}
+	\toprule
+	国家或地区             & \multicolumn{5}{c}{数据}\\
+	\midrule
+	\multirow{4}*{意大利}  &  \multirow{2}*{累计确诊}  & LSTM  & 789479.9582  & 0.99762  & 7.6276\% \\
+	
+	~                     &  ~                         &  BP & 1400034.6229 & 0.80102 & 15.331\%\\
+	\Xcline{2-6}{0.5pt}
+	~                     &  \multirow{2}*{累计死亡}   &  LSTM & 3156.1792 & 0.99843 & 2.2079\% \\
+	
+	~                     &  ~                         & BP &  5650.3914 & 0.99886 & 4.1139\% \\
+	\toprule
+\end{tabular}
+\end{table}
+\begin{lstlisting}[language=TeX]
+\begin{table}[H]
+	\bicaption{单元格合并演示}{Cell merge demonstration}\label{tab:hebing}
+	\begin{tabular}{cccccc}
+		\toprule
+		国家或地区             & \multicolumn{5}{c}{数据}\\
+		\midrule
+		\multirow{4}*{意大利}  &  \multirow{2}*{累计确诊}  & LSTM  & 789479.9582  & 0.99762  & 7.6276\% \\
+		
+		~                     &  ~                         &  BP & 1400034.6229 & 0.80102 & 15.331\%\\
+		\Xcline{2-6}{0.5pt}
+		~                     &  \multirow{2}*{累计死亡}   &  LSTM & 3156.1792 & 0.99843 & 2.2079\% \\
+		
+		~                     &  ~                         & BP &  5650.3914 & 0.99886 & 4.1139\% \\
+		
+		\midrule
+		\multirow{4}*{丹麦}   &  \multirow{2}*{累计确诊}  & LSTM & 131857.386  & 0.93468 & 6.6074\% \\
+		
+		~                     &  ~                       &  BP  & 293525.3201 & 0.79159  & 17.629\%\\
+		\Xcline{2-6}{0.5pt}
+		~                     &  \multirow{2}*{累计死亡}  &  LSTM & 75.4425& 0.99751 & 2.3149 \%\\
+		
+		~                     &  ~                       &   BP  & 206.0897  & 0.99902  & 7.0008\% \\
+		\toprule
+	\end{tabular}
+\end{table}
+\end{lstlisting}
+
+
+\subsection{跨页长表格}
+\begin{center}
+\setlength{\tabcolsep}{10mm}
+\begin{longtable}{ccc}
+	\bicaption{符号含义}{Symbolic Meaning}\label{tab:long}\\
+	\endfirsthead
+ 	\multicolumn{3}{c}{\makecell{\zihao{5}\kaishu 表~\thetable 符号含义(续)\vspace{-8pt}\\\zihao{5}\kaishu Table\;\thetable \;Symbolic Meaning(continue)}}\\
+	\toprule
+	符号      &   表示含义              &     单位 \\
+	\toprule
+	\endhead
+	\toprule
+	符号      &   表示含义              &     单位 \\
+	\toprule
+	$t$      & 时间                   &     $s$\\
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule 
+	...     &  ...                  &    ...\\
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule 
+	...     &  ...                  &    ...\\ 
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule 
+	...     &  ...                  &    ...\\
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule 
+	...     &  ...                  &    ...\\ 
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule 
+	...     &  ...                  &    ...\\
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule 
+	...     &  ...                  &    ...\\ 
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule 
+	...     &  ...                  &    ...\\
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\midrule 
+	...     &  ...                  &    ...\\ 
+	\midrule
+	...     &  ...                   &    ...\\
+	\midrule 
+	...    &  ...                   &    ...\\
+	\bottomrule
+\end{longtable}
+\end{center}
+
+\begin{lstlisting}[language=TeX]
+\begin{center}
+	\setlength{\tabcolsep}{10mm}
+	\begin{longtable}{ccc}
+		\bicaption{符号含义}{Symbolic Meaning}\label{tab：2}\\
+		\endfirsthead
+		\multicolumn{3}{c}{\makecell{\zihao{5}\kaishu 表~\thetable 符号含义(续)\vspace{-8pt}\\\zihao{5}\kaishu Table\;\thetable \;Symbolic Meaning(continue)}}\\
+		\toprule
+		符号      &   表示含义              &     单位 \\
+		\toprule
+		\endhead
+		\toprule
+		符号      &   表示含义              &     单位 \\
+		\toprule
+		$t$      & 时间                   &     $s$\\
+		\midrule
+		...     &  ...                   &    ...\\
+		\midrule 
+		...    &  ...                   &    ...\\
+		\midrule 
+		...     &  ...                  &    ...\\
+		\midrule
+		省略部分
+		\bottomrule
+	\end{longtable}
+\end{center}
+\end{lstlisting}
+
+\subsection{表格引用}
+引用： 表\ref{tab：1}。 引用表：\ref{tab:hebing}。 引用：表\ref{tab:long}。
+\begin{lstlisting}
+引用： 图\ref{tab：1}。 引用图 2 的第一个子图：\ref{tab:hebing}。 引用： 图 \ref{fig:long}。
+\end{lstlisting}
+
+\section{数学环境}
+\subsection{定理引理证明}
+\begin{theorem}
+这是一个定理
+\end{theorem}
+\begin{lemma}
+这是一个引理
+\end{lemma}
+\begin{proof}
+这是一个证明
+\end{proof}
+\begin{lstlisting}[language=TeX]
+\begin{theorem}
+	这是一个定理
+\end{theorem}
+\begin{lemma}
+	这是一个引理
+\end{lemma}
+\begin{proof}
+	这是一个证明
+\end{proof}
+\end{lstlisting}
+
+\subsection{数学公式}
+\begin{align*}
+	x &= t + \cos t +1 \\
+	y &= 2 \sin t
+\end{align*}
+\begin{align}
+	x &= t + \cos t +1 \\
+	y &= 2 \sin t
+\end{align}
+\begin{equation}
+	\begin{split}
+		\cos 2x &= \cos^2 x -\sin^2 x \\
+		&= 2 \cos^2 x -1
+	\end{split}
+\end{equation}
+\begin{equation*}
+	\cos 2x = \cos^2 x -\sin^2 x 
+\end{equation*}
+\[ \cos 2x = \cos^2 x -\sin^2 x \]
+\begin{equation}
+D(x)= \begin{cases}
+		1, & \text{如果} x \in \mathbb{Q}; \\
+		0, & \text{如果} x \in \mathbb{R} \setminus \mathbb{Q}.
+	\end{cases}
+\end{equation}
+\begin{lstlisting}[language=TeX]
+\begin{align*}
+	x &= t + \cos t +1 \\
+	y &= 2 \sin t
+\end{align*}
+\begin{align}
+	x &= t + \cos t +1 \\
+	y &= 2 \sin t
+\end{align}
+\begin{equation}
+	\begin{split}
+		\cos 2x &= \cos^2 x -\sin^2 x \\
+		&= 2 \cos^2 x -1
+	\end{split}
+\end{equation}
+\begin{equation*}
+	\cos 2x = \cos^2 x -\sin^2 x 
+\end{equation*}
+\[ \cos 2x = \cos^2 x -\sin^2 x \]
+\begin{equation}
+	D(x)= \begin{cases}
+		1, & \text{如果} x \in \mathbb{Q}; \\
+		0, & \text{如果} x \in \mathbb{R} \setminus \mathbb{Q}.
+	\end{cases}
+\end{equation}
+\end{lstlisting}
+\section{参考文献}
+参考文献使用\myverb{bibtex}。单个引用\cite{choudhary2023multi}。连续引用\cite{kumar2020improved,zhu2019deformable,ZDGC202202020,JXXB201907002}
+\begin{lstlisting}
+单个引用\cite{choudhary2023multi}。连续引用\cite{kumar2020improved,zhu2019deformab
+	le,ZDGC202202020,JXXB201907002}
+\end{lstlisting}
+生成 Bib\TeX 可以使用谷歌学术生成。知网在生成 Bib\TeX 格式的参考文献需要点很多次，因此找朋友开发了一个油猴插件可以直接复制知网文献的Bib\TeX 格式。
+
+插件地址：\begin{itemize}
+	\item 游猴 :\href{https://greasyfork.org/zh-CN/scripts/444428}{ \;\;https://greasyfork.org/zh-CN/scripts/444428}
+
+	\item GitHub \faGithub :\href{https://github.com/BNDou/getCnkiLiteratureBibTex}{ \;\;https://github.com/BNDou/getCnkiLiteratureBibTex}
+\end{itemize}
+
+
+
+
+
+\section{化学方程式}
+考虑到一些同学需要写化学公式，本模板加载了宏包  \myverb{mhchem} 和 \myverb{chemfig}。 
+
+化学方程式直用\myverb{mhchem}宏包提供的以下代码即可。
+\begin{lstlisting}
+	\ce{...}
+\end{lstlisting} 
+\begin{center}
+\ce{Zn^2+  <=>[+ 2OH-][+ 2H+]  $\underset{\text{这是沉淀}}{\ce{Zn(OH)2 v}}$  <=>[+ 2OH-][+ 2H+]  $\underset{\text{这是离子}}{\ce{[Zn(OH)4]^2-}}$}
+\end{center}
+结构式用\myverb{chemfig}宏包提供的功能。
+\begin{center}
+	\chemfig{[:-30]HO--[:30](<[2]OH)-(<:[6]OH)
+		-[:30](<:[2]OH)-(<:[6]OH)-[:30](=[2]O)-H}
+\end{center}
+
+\section{生僻字}
+引用过程中可能出现某人姓名中有生僻字导致生成的PDF中无法显示这个字，给出一个最简单的解决方案:将生僻字自己截图，然后插入文中。
+
+eg：{\lower0.4ex\hbox{\includegraphics[width=1.1em]{huaji}}}是我造的一个字
+\begin{lstlisting}[language=TeX]
+eg：{\lower0.4ex\hbox{\includegraphics[width=1.1em]{huaji}}}是我造的一个字
+\end{lstlisting}
+
+\section{列表}
+
+
+\subsection{有序列表}
+\begin{minipage}[t]{0.48\textwidth}
+	\begin{lstlisting}[language=TeX]
+		\begin{enumerate}
+			\item 
+			\item 
+			\item 
+		\end{enumerate}
+	\end{lstlisting} 
+\end{minipage}
+\begin{minipage}[t]{0.48\textwidth}
+	\rule[-10pt]{10cm}{0em}
+	\begin{enumerate}
+		\item 
+		\item 
+		\item 
+	\end{enumerate}
+\end{minipage}
+\subsection{无序列表}
+\begin{minipage}[t]{0.48\textwidth}
+	\begin{lstlisting}[language=TeX]
+		\begin{itemize}
+			\item 
+			\item 
+			\item 
+		\end{itemize}
+	\end{lstlisting} 
+\end{minipage}
+\begin{minipage}[t]{0.48\textwidth}
+	\rule[-10pt]{10cm}{0em}
+	\begin{itemize}
+		\item 
+		\item 
+		\item 
+	\end{itemize}
+\end{minipage}
+

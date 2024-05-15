@@ -1,16 +1,19 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{tyust}[v1.0 FanChao made LaTeX Template for Graduate Thesis at Taiyuan University of Science and Technology]
+\ProvidesClass{TYUSTthesis}[v1.0 FanChao made LaTeX Template for Graduate Thesis at Taiyuan University of Science and Technology]
 \def\TYUSTthesis{TYUSTthesis}
 \def\version{1.0}
 % ----- Ctexbook ----- %
 \LoadClass[zihao=-4,a4paper,UTF8,scheme=chinese,heading = true]{ctexbook}
 % 
 \RequirePackage[left=3cm,right=2cm,top=2.54cm,bottom=2.54cm]{geometry}
-\RequirePackage{float,setspace,lipsum,zhlipsum,mwe,graphicx,booktabs,longtable,makecell,calc}
-\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\RequirePackage{float,setspace,lipsum,zhlipsum,mwe,graphicx,
+                booktabs,longtable,makecell,calc,fontawesome,multirow}
+\RequirePackage[version=4]{mhchem}
+\RequirePackage{chemfig}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 全文字体设置
+%% 全文设置
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\graphicspath{{figure/}}
 \setmainfont{Times New Roman}
 \songti
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,6 +42,24 @@
 % \renewcommand\frontmatter{\setcounter{page}{1}}
 % \renewcommand\mainmatter{\pagenumbering{arabic}\setcounter{page}{1}\@mainmatterfalse}
 % \renewcommand\backmatter{\setcounter{page}{1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 数学环境
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{amsmath,amsthm,amssymb,amsfonts}
+\newtheoremstyle{note}%
+  {3pt}
+  {3pt}
+  {}
+  {}
+  {\itshape\heiti}
+  {}
+  {5pt}
+  {}
+\theoremstyle{note}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{lemma}{引理}[chapter]
+\renewcommand{\proofname}{\indent\heiti\bf 证明}
+\renewcommand{\qedsymbol}{$\blacksquare$}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 页眉页脚
@@ -79,11 +100,27 @@
 }
 \fancypagestyle{mystyle}{%正文页眉页脚
     \fancyhf{}
-    \fancyhead[CO]{\fc\leftmark} % 奇数页 页眉 中
-    \fancyhead[CE]{\fc\TYUST@ctitle} % 偶数页 页眉 中
-    \fancyfoot[C]{\fc\thepage} % 页脚 中
-    % \renewcommand{\headrulewidth}{0.5pt} % 设置页眉下方横线的粗细为0.5pt
-    % \renewcommand{\footrulewidth}{0pt} % 页脚上方无横线
+    \fancyhead[CO]{\fc\leftmark}
+    \fancyhead[CE]{\fc\TYUST@ctitle}
+    \fancyfoot[C]{\fc\thepage}
+}
+\fancypagestyle{refbib}{%参考文献
+    \fancyhf{}
+    \fancyhead[CO]{\fc 参考文献} 
+    \fancyhead[CE]{\fc\TYUST@ctitle}
+    \fancyfoot[C]{\fc\thepage}
+}
+\fancypagestyle{achieve}{%成果
+    \fancyhf{}
+    \fancyhead[CO]{\fc 攻读学位期间取得的学术成果} 
+    \fancyhead[CE]{\fc\TYUST@ctitle}
+    \fancyfoot[C]{\fc\thepage}
+}
+\fancypagestyle{ack}{%致谢
+    \fancyhf{}
+    \fancyhead[CO]{\fc 致\hspace{\ccwd}谢} 
+    \fancyhead[CE]{\fc\TYUST@ctitle}
+    \fancyfoot[C]{\fc\thepage}
 }
 \pagestyle{mystyle}
 \renewcommand{\chaptermark}[1]{\@mkboth{第\chinese{chapter}章~~#1}{}}
@@ -198,7 +235,7 @@
     {\fontsize{13.5}{10}\TYUST@eschool}\par\vspace*{1cm}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=.5]{cover/logo1.jpg}
+        \includegraphics[scale=.5]{logo/logo1.jpg}
     \end{figure}\vspace*{1cm}
     {\bf\zihao{-3}Supervisor}\par\vspace*{.5cm}
     {\bf\zihao{-3}Professor:} {\fontsize{13.5}{10}\TYUST@esupervisor}\par\vspace*{.5cm}
@@ -243,7 +280,7 @@
 \newcommand{\bs}{\songti\zihao{4}\bf}
 \newlength{\TYUST@title@width}
 \def\TYUST@put@title#1{\makebox{\hb@xt@\TYUST@title@width{#1}}}
-% ----- maketitle ----- %
+% --------------------- %
 \renewcommand{\maketitle}{
 \clearpage
 \setstretch{1.2}
@@ -313,6 +350,7 @@
     appendixname={附录},
     bibname={参考文献},
     proofname={证明},
+    today=old,
     chapter={%一级标题：黑体3号，段前24磅，段后18磅
         afterindent=true,
         aftername=\hskip\ccwd,
@@ -347,13 +385,16 @@
 %% PDF源数据
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{hyperref}
-\hypersetup{%
-    hidelinks,
+\hypersetup{
     pdftitle={\TYUST@ctitle},
     pdfauthor={\TYUST@authors},
     pdfsubject={\TYUST@department},
     % pdfkeywords={\TYUST@ckeywords},
-    pdfcreator={\TYUSTthesis - v\version}
+    pdfcreator={\TYUSTthesis - v\version},
+    urlcolor=black,
+	citecolor=black,
+	linkcolor=black,
+	hidelinks,
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 中英文摘要, 关键词
@@ -424,6 +465,7 @@
 \DeclareCaptionFont{minusfour}{\zihao{5}}
 \captionsetup[figure]{
     labelsep=space,
+    format=hang,
     font={minusfour,kai},
     skip=20pt,
     position=auto,
@@ -432,25 +474,27 @@
 }
 \captionsetup[subfigure]{
     labelsep=space,
+    format=hang,
     font={minusfour,kai},
     skip=10pt,
     position=auto,
 }
 \captionsetup[table]{
     labelsep=space,
+    format=hang,
     font={minusfour,kai},
     aboveskip=6pt,
     belowskip=-10pt
     }
 % \setlength{\belowcaptionskip}{-1cm}
 % \captionsetup[figure][bi-first]{name=图}
-\captionsetup[figure][bi-first]{labelsep=space,font={minusfour,kai}}
-\captionsetup[figure][bi-second]{labelsep=space,name=Fig.,font={minusfour}}
-\captionsetup[subfigure][bi-first]{labelsep=space,font={minusfour,kai}}
-\captionsetup[subfigure][bi-second]{labelsep=space,font={minusfour}}
+\captionsetup[figure][bi-first]{labelsep=space,font={minusfour,kai},format=hang}
+\captionsetup[figure][bi-second]{labelsep=space,name=Fig.,font={minusfour},format=hang}
+\captionsetup[subfigure][bi-first]{labelsep=space,font={minusfour,kai},format=hang}
+\captionsetup[subfigure][bi-second]{labelsep=space,font={minusfour},format=hang}
 % \captionsetup[table][bi-first]{name=表}
-\captionsetup[table][bi-first]{labelsep=space,font={minusfour,kai}}
-\captionsetup[table][bi-second]{labelsep=space,name=Table,font={minusfour}}
+\captionsetup[table][bi-first]{labelsep=space,font={minusfour,kai},format=hang}
+\captionsetup[table][bi-second]{labelsep=space,name=Table,font={minusfour},format=hang}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 主要符号对照表
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -485,12 +529,13 @@
 \def\@onlinecite#1{\begingroup\let\@cite\NAT@citenum\citep{#1}\endgroup}
 \renewenvironment{thebibliography}[1]{%
    \chapter*{\bibname}%
+   \thispagestyle{refbib}
    \zihao{-4}\linespread{1.5}
    \addcontentsline{toc}{chapter}{\bibname}
    \list{\@biblabel{\@arabic\c@enumiv}}%
         {\renewcommand{\makelabel}[1]{##1\hfill}
          \settowidth\labelwidth{1.1cm}
-         \setlength{\labelsep}{0.4em}
+         \setlength{\labelsep}{-.5em}
          \setlength{\itemindent}{\z@}
          \setlength{\leftmargin}{\labelwidth+\labelsep}
          \addtolength{\itemsep}{-0.7em}
@@ -513,6 +558,7 @@
 \newenvironment{achievement}[1][\TYUST@achievement@title]{%
   \clearpage\chapter*{#1}
   \addcontentsline{toc}{chapter}{攻读学位期间取得的学术成果}
+  \thispagestyle{achieve}
   }{\clearpage}
 \newlist{mychineselist}{enumerate}{1}
 \setlist[mychineselist,1]{label=\chinese{mychineselisti}、, font=\bfseries}
@@ -523,6 +569,7 @@
 \newcommand{\TYUST@ackname}{致\hspace{\ccwd} 谢}
 \newenvironment{ack}{%
     \chapter*{\TYUST@ackname}
+    \thispagestyle{ack}
     \addcontentsline{toc}{chapter}{致谢}
     \songti\zihao{-4}
   }{}
@@ -538,15 +585,6 @@
 	\renewcommand {\theequation}{\thechapter\arabic{equation}}
 	\renewcommand {\thetable} {\thechapter{}\arabic{table}}
 	\ctexset{
-		% chapter={
-		% 	fixskip=true ,
-		% 	numberformat=\bfseries,
-		% 	name = {附录},
-		% 	number = \Alph{chapter},
-        %     format = \heiti\zihao{3}\centering,
-        %     beforeskip=24pt,
-        %     afterskip=18pt,
-		% },
 		section={
             break = \Needspace{.5\textheight},
             fixskip=true,
@@ -567,17 +605,16 @@
             beforeskip   = 12pt,
             afterskip    = 6pt,
 		}
-	}
-}
-
+	}}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 代码环境(只是为了写说明文档)
+%% (为了写说明文档的一些配置)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{tikz,tcolorbox,listings}
+\RequirePackage{tikz,listings,tcolorbox}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 \definecolor{frenchplum}{RGB}{190,20,83}
+\definecolor{color1}{HTML}{ff7b89}
 \lstset{
 	frame=tb,
 	aboveskip=3mm,
@@ -586,10 +623,10 @@
 	columns=flexible,
 	framerule=1pt,
 	rulecolor=\color{gray!35},
-	backgroundcolor=\color{gray!5},
+	backgroundcolor=\color{gray!2},
 	basicstyle={\small\ttfamily},
-	%numbers=none,  
-	numbers=left,  
+	numbers=none,
+	% numbers=left,  
 	numberstyle=\footnotesize\color{black},
 	keywordstyle=\color{blue},
 	commentstyle=\color{dkgreen},
@@ -608,14 +645,125 @@
 		version,includegraphics,setmainfont,setsansfont,setmonofont,setCJKmainfont,setCJKsansfont,
 		setCJKmonofont,RequirePackage,figref,tabref,email,maketitle,keywords,definecolor,extrainfo,
 		logo,cover,subtitle,appendix,chapter,hypersetup,mainmatter,tableofcontents,elegantpar,
-		numbers,authoryear,heiti,kaishu,lstset,pagecolor,zhnumber,marginpar,part,equote
+		numbers,authoryear,heiti,kaishu,lstset,pagecolor,zhnumber,marginpar,part,equote,end
 	},
 }
-\tcbuselibrary{listings}
-\tcbuselibrary{xparse}
+\tcbuselibrary{all}
+% \tcbuselibrary{xparse}
+
 \DeclareTotalTCBox{\myverb}{ v }{verbatim,
 	on line,
-	arc=3pt,colframe=red!75!black,colupper=blue,before upper={\rule[-3pt]{0pt}{12pt}},
-	boxsep=1mm,left=0pt,right=0pt,top=0pt,bottom=0pt,
-	boxrule=0pt,bottomrule=0.1pt,toprule=0.1pt}{#1}
+	arc=0pt,colframe=black,colupper=blue,before upper={\rule[-3pt]{0pt}{12pt}},
+	boxsep=1pt,left=0pt,right=0pt,top=0pt,bottom=0pt,
+	boxrule=1pt,bottomrule=1pt,toprule=1pt}{#1}
+
+% ----- 边注 ----- %
+\newcommand{\customNode}[1]{%
+	\tikz[baseline=(X.base)]{
+		\node[rectangle, draw=none, thick, black, inner sep=-1pt] (X) {\strut #1}; % 创建节点并设置内容
+		\draw[color1, thick] (X.north west) -- (X.north east); % 绘制上边框
+		\draw[color1, thick] (X.south west) -- (X.south east); % 绘制下边框
+	}%
+}
+\RequirePackage{marginnote,varwidth}
+\newcommand{\leftnote}[1]{%
+\reversemarginpar
+\marginpar{%
+    \hspace*{45pt}
+    \customNode{\strut #1}
+    }%
+}
+\newcommand{\rightnote}[1]{%
+\normalmarginpar
+\marginpar{%
+    \hspace*{45pt}
+    \customNode{\strut #1}
+    }%
+}
+% ----- 文档结构 ----- %
+\RequirePackage[edges]{forest}
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderbg3}{RGB}{24,206,148}
+\definecolor{folderborder}{RGB}{110,144,169}
+\def\foldedpaper#1{
+	\tikz[scale=#1,line width={#1*1pt}]{
+		\def\a{1.41} % relative height
+		\def\b{0.2}  % relative height/width of corner
+		\def\c{0.1}  % relative margin width (on either side)
+		\def\d{0.05} % vertical offset of lines
+		\def\N{6}    % number of lines
+		\draw         (0,0)
+		--  ++(-1,0)
+		--  ++(0,\a)
+		--  ++(1-\b,0)
+		--  ++(\b,-\b)
+		-- cycle;
+		\foreach \lnum in {1,...,\N}{
+			\pgfmathsetmacro\yline{\a-\d-\lnum*\a/(\N+1)}
+			\draw (-1+\c,\yline) -- (-\c,\yline);
+		}
+		\draw[fill=white] (0,\a-\b) -- ++(-\b,0) -- ++ (0,\b);
+	}
+}
+\newlength\Size
+\setlength\Size{4pt}
+\tikzset{%
+	folder/.pic={%
+		\filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);
+		\filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+	},
+	file/.pic={%
+		\filldraw [draw=folderborder, top color=folderbg!5, bottom color=folderbg!10] (-\Size,.4*\Size+5pt) coordinate (a) |- (\Size,-1.2*\Size) coordinate (b) -- ++(0,1.6*\Size) coordinate (c) -- ++(-5pt,5pt) coordinate (d) -- cycle (d) |- (c) ;
+	},
+	file2/.pic={%
+		\filldraw [draw=folderborder, top color=folderbg3!20, bottom color=folderbg3!50] (-\Size,.4*\Size+5pt) coordinate (a) |- (\Size,-1.2*\Size) coordinate (b) -- ++(0,1.6*\Size) coordinate (c) -- ++(-5pt,5pt) coordinate (d) -- cycle (d) |- (c) ;
+	},
+	none/.pic={%
+	},
+}
+\forestset{%
+	declare autowrapped toks={pic me}{},
+	pic dir tree/.style={%
+		for tree={%
+			folder,
+			font=\ttfamily,
+			grow'=0,
+		},
+		before typesetting nodes={%
+			for tree={%
+				edge label+/.option={pic me},
+			},
+		},
+	},
+	pic me set/.code n args=2{%
+		\forestset{%
+			#1/.style={%
+				inner xsep=2\Size,
+				pic me={pic {#2}},
+			}
+		}
+	},
+	pic me set={directory}{folder},
+	pic me set={file}{file},
+	pic me set={file2}{file2},
+	pic me set={none}{none},
+}
+\newcounter{question}
+\setcounter{question}{0}
+\newtcolorbox{mybox}[2][]{enhanced,skin=enhancedlast jigsaw,
+attach boxed title to top left={xshift=-4mm,yshift=-0.5mm},
+fonttitle=\bfseries\sffamily,varwidth boxed title=0.7\linewidth,
+colbacktitle=blue!45!white,colframe=red!50!black,
+interior style={top color=blue!10!white,bottom color=red!10!white},
+boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+underlay boxed title={
+\fill[blue!45!white] (title.north west) -- (title.north east)
+-- +(\tcboxedtitleheight-1mm,-\tcboxedtitleheight+1mm)
+-- ([xshift=4mm,yshift=0.5mm]frame.north east) -- +(0mm,-1mm)
+-- (title.south west) -- cycle;
+\fill[blue!45!white!50!black] ([yshift=-0.5mm]frame.north west)
+-- +(-0.4,0) -- +(0,-0.3) -- cycle;
+\fill[blue!45!white!50!black] ([yshift=-0.5mm]frame.north east)
+-- +(0,-0.3) -- +(0.4,0) -- cycle; },
+title={\stepcounter{question} {\heiti Question\;\thequestion.}\;\;#2},#1}
 \endinput
