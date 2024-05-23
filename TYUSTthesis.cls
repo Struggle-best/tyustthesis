@@ -648,8 +648,7 @@
 		numbers,authoryear,heiti,kaishu,lstset,pagecolor,zhnumber,marginpar,part,equote,end
 	},
 }
-\tcbuselibrary{all}
-% \tcbuselibrary{xparse}
+\tcbuselibrary{xparse,skins}
 
 \DeclareTotalTCBox{\myverb}{ v }{verbatim,
 	on line,

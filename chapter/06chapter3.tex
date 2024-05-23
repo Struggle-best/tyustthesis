@@ -351,46 +351,21 @@ D(x)= \begin{cases}
 \end{equation}
 \end{lstlisting}
 \section{参考文献}
-参考文献使用\myverb{bibtex}。单个引用\cite{choudhary2023multi}。连续引用\cite{kumar2020improved,zhu2019deformable,ZDGC202202020,JXXB201907002}
+参考文献建议使用\myverb{bibtex}，若你想使用列表方法，自行百度。
+
+单个引用\cite{choudhary2023multi}。连续引用\cite{kumar2020improved,zhu2019deformable}。连续引用\cite{choudhary2023multi,zhu2019deformable,ZDGC202202020,JXXB201907002}
 \begin{lstlisting}
 单个引用\cite{choudhary2023multi}。连续引用\cite{kumar2020improved,zhu2019deformab
-	le,ZDGC202202020,JXXB201907002}
+	le}。连续引用\cite{choudhary2023multi,zhu2019deformable,ZDGC202202020,JXXB201907
+	002}
 \end{lstlisting}
-生成 Bib\TeX 可以使用谷歌学术生成。知网在生成 Bib\TeX 格式的参考文献需要点很多次，因此找朋友开发了一个油猴插件可以直接复制知网文献的Bib\TeX 格式。
+生成文献 Bib\TeX 引用格式可以使用谷歌学术。知网在生成文献 Bib\TeX 引用格式需要点很多次，因此找朋友开发了一个油猴插件，可以直接复制知网文献的Bib\TeX 格式。
 
 插件地址：\begin{itemize}
 	\item 游猴 :\href{https://greasyfork.org/zh-CN/scripts/444428}{ \;\;https://greasyfork.org/zh-CN/scripts/444428}
 
 	\item GitHub \faGithub :\href{https://github.com/BNDou/getCnkiLiteratureBibTex}{ \;\;https://github.com/BNDou/getCnkiLiteratureBibTex}
 \end{itemize}
-
-
-
-
-
-\section{化学方程式}
-考虑到一些同学需要写化学公式，本模板加载了宏包  \myverb{mhchem} 和 \myverb{chemfig}。 
-
-化学方程式直用\myverb{mhchem}宏包提供的以下代码即可。
-\begin{lstlisting}
-	\ce{...}
-\end{lstlisting} 
-\begin{center}
-\ce{Zn^2+  <=>[+ 2OH-][+ 2H+]  $\underset{\text{这是沉淀}}{\ce{Zn(OH)2 v}}$  <=>[+ 2OH-][+ 2H+]  $\underset{\text{这是离子}}{\ce{[Zn(OH)4]^2-}}$}
-\end{center}
-结构式用\myverb{chemfig}宏包提供的功能。
-\begin{center}
-	\chemfig{[:-30]HO--[:30](<[2]OH)-(<:[6]OH)
-		-[:30](<:[2]OH)-(<:[6]OH)-[:30](=[2]O)-H}
-\end{center}
-
-\section{生僻字}
-引用过程中可能出现某人姓名中有生僻字导致生成的PDF中无法显示这个字，给出一个最简单的解决方案:将生僻字自己截图，然后插入文中。
-
-eg：{\lower0.4ex\hbox{\includegraphics[width=1.1em]{huaji}}}是我造的一个字
-\begin{lstlisting}[language=TeX]
-eg：{\lower0.4ex\hbox{\includegraphics[width=1.1em]{huaji}}}是我造的一个字
-\end{lstlisting}
 
 \section{列表}
 
@@ -432,3 +407,26 @@ eg：{\lower0.4ex\hbox{\includegraphics[width=1.1em]{huaji}}}是我造的一个�
 	\end{itemize}
 \end{minipage}
 
+\section{化学方程式}
+考虑到一些同学需要写化学公式，本模板加载了宏包  \myverb{mhchem} 和 \myverb{chemfig}。 
+
+化学方程式直用\myverb{mhchem}宏包提供的以下代码即可。
+\begin{lstlisting}
+	\ce{...}
+\end{lstlisting} 
+\begin{center}
+	\ce{Zn^2+  <=>[+ 2OH-][+ 2H+]  $\underset{\text{这是沉淀}}{\ce{Zn(OH)2 v}}$  <=>[+ 2OH-][+ 2H+]  $\underset{\text{这是离子}}{\ce{[Zn(OH)4]^2-}}$}
+\end{center}
+结构式用\myverb{chemfig}宏包提供的功能。
+\begin{center}
+	\chemfig{[:-30]HO--[:30](<[2]OH)-(<:[6]OH)
+		-[:30](<:[2]OH)-(<:[6]OH)-[:30](=[2]O)-H}
+\end{center}
+
+\section{生僻字}
+引用过程中可能出现某人姓名中有生僻字导致生成的PDF中无法显示这个字，给出一个最简单的解决方案:将生僻字自己截图，然后插入文中。
+
+eg：{\lower0.4ex\hbox{\includegraphics[width=1.1em]{huaji}}}是我造的一个字
+\begin{lstlisting}[language=TeX]
+	eg：{\lower0.4ex\hbox{\includegraphics[width=1.1em]{huaji}}}是我造的一个字
+\end{lstlisting}
