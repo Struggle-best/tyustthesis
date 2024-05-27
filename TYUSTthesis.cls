@@ -6,6 +6,8 @@
 \LoadClass[zihao=-4,a4paper,UTF8,scheme=chinese,heading = true]{ctexbook}
 % 
 \RequirePackage[left=3cm,right=2cm,top=2.54cm,bottom=2.54cm]{geometry}
+% \setlength{\voffset}{-0.64cm}
+% \setlength{\footskip}{0.34cm}
 \RequirePackage{float,setspace,lipsum,zhlipsum,mwe,graphicx,
                 booktabs,longtable,makecell,calc,fontawesome,multirow}
 \RequirePackage[version=4]{mhchem}
