@@ -9,9 +9,10 @@
 % \setlength{\voffset}{-0.64cm}
 % \setlength{\footskip}{0.34cm}
 \RequirePackage{float,setspace,lipsum,zhlipsum,mwe,graphicx,
-                booktabs,longtable,makecell,calc,fontawesome,multirow}
+                booktabs,longtable,makecell,calc,fontawesome,
+                multirow,chemfig,threeparttable}
 \RequirePackage[version=4]{mhchem}
-\RequirePackage{chemfig}
+\RequirePackage[linesnumbered, ruled]{algorithm2e}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 全文设置
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -62,7 +63,6 @@
 \newtheorem{lemma}{引理}[chapter]
 \renewcommand{\proofname}{\indent\heiti\bf 证明}
 \renewcommand{\qedsymbol}{$\blacksquare$}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 页眉页脚
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -463,6 +463,11 @@
 \RequirePackage[list=false]{subcaption}% 子图也加入llistoffigures list=true
 \RequirePackage[list=off]{bicaption}% 第一个标题加入 listoffigures
 
+\renewcommand {\thetable} {\thechapter{}-\arabic{table}}
+\renewcommand {\thesubfigure} {\;(\alph{subfigure})}
+\renewcommand {\thefigure} {\thechapter{}-\arabic{figure}}
+\renewcommand {\theequation} {\thechapter{}-\arabic{equation}}
+
 \DeclareCaptionFont{kai}{\kaishu}
 \DeclareCaptionFont{minusfour}{\zihao{5}}
 \captionsetup[figure]{
@@ -492,11 +497,20 @@
 % \captionsetup[figure][bi-first]{name=图}
 \captionsetup[figure][bi-first]{labelsep=space,font={minusfour,kai},format=hang}
 \captionsetup[figure][bi-second]{labelsep=space,name=Fig.,font={minusfour},format=hang}
-\captionsetup[subfigure][bi-first]{labelsep=space,font={minusfour,kai},format=hang}
-\captionsetup[subfigure][bi-second]{labelsep=space,font={minusfour},format=hang}
+\captionsetup[subfigure][bi-first]{labelsep=space,font={minusfour,kai},format=hang,labelformat=simple}
+\captionsetup[subfigure][bi-second]{labelsep=space,font={minusfour},format=hang,labelformat=simple}
 % \captionsetup[table][bi-first]{name=表}
 \captionsetup[table][bi-first]{labelsep=space,font={minusfour,kai},format=hang}
 \captionsetup[table][bi-second]{labelsep=space,name=Table,font={minusfour},format=hang}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%图 表 公式 算法 超链接
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[nameinlink]{cleveref}
+\usepackage{threeparttable}
+\crefname{figure}{图}{}
+\crefname{table}{表}{}
+\crefname{equation}{公式}{}
+\crefname{algocf}{算法}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 主要符号对照表
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

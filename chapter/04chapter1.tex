@@ -2,7 +2,7 @@
 \zihao{-4}\linespread{1.55}\selectfont
 \chapter{模板使用说明}
 \section{背景}
-作者将要写毕业论文，发现学校并没有研究生毕业论文的\LaTeX 模板，因此根据\href{https://yjsxy.tyust.edu.cn/info/1172/3275.html}{《太原科技大学研究生学位论文格式的统一要求》}（以下简称《要求》）开发了一个研究生\LaTeX 毕业论文模板。TYUSTthesis(Taiyuan University of Science and Technology thesis)以\myverb{ctexbook}文档类为基础，以基本满足《要求》。但该模板并非官方模板，且不同学院或老师有不同要求，遇到问题请反馈。本模板部分格式参考
+作者将要写毕业论文，发现学校并没有研究生毕业论文的\LaTeX 模板，因此根据\href{https://yjsxy.tyust.edu.cn/info/1172/3275.htm}{《太原科技大学研究生学位论文格式的统一要求》}（以下简称《要求》）开发了一个研究生\LaTeX 毕业论文模板。TYUSTthesis(Taiyuan University of Science and Technology thesis)以\myverb{ctexbook}文档类为基础，以基本满足《要求》。但该模板并非官方模板，且不同学院或老师有不同要求，遇到问题请反馈。本模板部分格式参考
 \href{https://github.com/tuxify/zzuthesis}{《郑州大学本科毕业设计(论文)和研究生学位论文(含 硕士和博士) LaTeX 模版》}
 
 本项目Github 地址\faGithub :\href{https://github.com/Struggle-best/TYUST_thesis}{ \;\;https://github.com/Struggle-best/TYUST\_thesis}
@@ -95,10 +95,16 @@
 \documentclass[master,declare]{TYUSTthesis}
 \end{lstlisting}
 
-你若想使用博士论文并包含英文封面，可使用下边命令
+你想使用博士论文并包含英文封面，可使用下边命令
 \begin{lstlisting}
 \documentclass[doctor,encover]{TYUSTthesis}
 \end{lstlisting}
+
+你想使用博士论文，包含英文封面，包含授权页，可使用下边命令
+\begin{lstlisting}
+\documentclass[doctor,encover,declare]{TYUSTthesis}
+\end{lstlisting}
+
 \section{预加载宏包}
 \begin{table}[hp]
 	\renewcommand\arraystretch{1.2}
@@ -112,19 +118,21 @@
 		float	  &浮动体	     &setspace	  & 设置间距  \\
 		mwe 	  &提供示例图片  & graphicx  & 插图       \\
 		booktabs  &三线表       & longtable &长表格      \\
-		makecell   &表格内容换行 & calc      & 距离计算   \\
-		fontawesome& 字体       & multirow  & 合并单元格  \\
+		threeparttable&注释表&makecell   &表格内容换行 \\
+		multirow  & 合并单元格& calc      & 距离计算   \\
+		fontawesome& 字体 &listings    & 代码环境         \\
 		mhchem     &化学环境     &chemfig   &化学环境     \\
 		amsmath    &数学环境    &amsthm     &数学环境     \\
 		amssymb    &数学环境    &amsfonts   &数学环境     \\
 		hyperref   & 超链接    &enumitem    &列表         \\
+		cleveref   & 引用格式   & algorithm2e & 算法\\
 		titletoc   & 目录设置  &setspace     &设置间距    \\
 		caption    & 图表标题  &tikz        &画图         \\
 		subcaption & 图表标题  &tcolorbox   & 彩色盒子   \\
-		bicaption &  图表标题  &listings    & 代码环境    \\
+		bicaption &  图表标题   & xparse    &  边注       \\
 		marginnote&  边注      &forest      &             \\
-		xparse    &  边注      &zhlipsum    &             \\
-        lipsum    &            &needspace  &              \\
+		zhlipsum    &            &needspace  &               \\
+        lipsum     &    & &\\
 		\hline
 	\end{tabular}
 \end{table}
