@@ -12,7 +12,6 @@
                 booktabs,longtable,makecell,calc,fontawesome,
                 multirow,chemfig,threeparttable}
 \RequirePackage[version=4]{mhchem}
-\RequirePackage[linesnumbered, ruled]{algorithm2e}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 全文设置
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -109,6 +108,12 @@
 \fancypagestyle{refbib}{%参考文献
     \fancyhf{}
     \fancyhead[CO]{\fc 参考文献} 
+    \fancyhead[CE]{\fc\TYUST@ctitle}
+    \fancyfoot[C]{\fc\thepage}
+}
+\fancypagestyle{appendix}{%附录
+    \fancyhf{}
+    \fancyhead[CO]{\fc 附\hspace{\ccwd}录}
     \fancyhead[CE]{\fc\TYUST@ctitle}
     \fancyfoot[C]{\fc\thepage}
 }
@@ -510,6 +515,9 @@
 \crefname{figure}{图}{}
 \crefname{table}{表}{}
 \crefname{equation}{公式}{}
+\RequirePackage[linesnumbered, ruled]{algorithm2e}
+\renewcommand{\algorithmcfname}{算法}
+\renewcommand{\thealgocf}{\thechapter.\arabic{algocf}}
 \crefname{algocf}{算法}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 主要符号对照表
@@ -597,31 +605,39 @@
 	\setcounter{table}{0}
 	\setcounter{figure}{0}
 	\setcounter{chapter}{0}
-	\renewcommand {\thefigure}{\thechapter\arabic{figure}}
-	\renewcommand {\theequation}{\thechapter\arabic{equation}}
-	\renewcommand {\thetable} {\thechapter{}\arabic{table}}
+	\renewcommand {\thefigure}{\Alph{chapter}.\arabic{figure}}
+	\renewcommand {\theequation}{\Alph{chapter}.\arabic{equation}}
+	\renewcommand {\thetable} {\Alph{chapter}.\arabic{table}}
 	\ctexset{
-		section={
-            break = \Needspace{.5\textheight},
+        chapter={
+            afterindent=true,
+            aftername=\hskip\ccwd,
+            name = {附录},
+            number = \Alph{chapter},
+            format = \heiti\zihao{3}\centering,
+            beforeskip=-26pt,
+            afterskip=18pt,
+        },
+        section={
             fixskip=true,
             afterindent=true,
-            name = {附录},
-			number = \Alph{section},
+            number =\Alph{chapter}.\arabic{section},
             numberformat=\bfseries,
             format = \heiti\zihao{-3},
-            beforeskip=12pt,
+            beforeskip=24pt,
             afterskip=6pt,
-		},
+        },
 		subsection={
             afterindent=true,
             fixskip=true ,
 			numberformat=\bfseries,
-			number = \arabic{section}.\arabic{subsection},
+			number = \Alph{chapter}.\arabic{section}.\arabic{subsection},
 			format = \heiti\zihao{-4},
             beforeskip   = 12pt,
             afterskip    = 6pt,
 		}
-	}}{}
+	}
+    }{\thispagestyle{appendix}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% (为了写说明文档的一些配置)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

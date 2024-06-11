@@ -15,29 +15,26 @@
 
 \begin{lstlisting}
 \begin{document}
-\input{chapter/01coverinfor} %封面
-\maketitle%封面
+\input{chapter/01coverinfor}%封面信息
+\maketitle %封面
 % ---------- 前文 --------- %
 \frontmatter
 \input{chapter/02abstract}%摘要
 \tableofcontents   %目录
 %\listoffigures    %插图清单
 %\listoftables     %表格清单
-\input{chapter/03denotation}%主要符号对照表
-
+%\input{chapter/03denotation}%主要符号对照表
 % ---------- 正文 --------- %
 \mainmatter
 \input{chapter/04chapter1}
-
-\bibliography{chapter/13references.bib}%参考文献
-% ---------- 附录 --------- %
-%\begin{appendix}
-%	\input{chapter/10appendices}
-%\end{appendix}
+\input{chapter/05chapter2}
+\input{chapter/06chapter3}
+\bibliography{chapter/10references.bib}%参考文献
+%\input{chapter/11appendices}% 附录
+% ---------- 后文 --------- %
 \backmatter
-
-\input{chapter/11achievement}%学术成果
-\input{chapter/12acknowledgement}%致谢
+\input{chapter/12achievement}%学术成果
+\input{chapter/13acknowledgement}%致谢
 \end{document}
 \end{lstlisting}
 \section{文件夹组成}

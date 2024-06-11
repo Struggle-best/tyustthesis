@@ -72,24 +72,6 @@
 \end{figure}
 \end{lstlisting}
 
-\subsection{图引用}
-引用： 图\ref{fig：1}。
-
-引用图 2 的第 1 个子图：\ref{fig:2-1}。
- 
-引用图 2 的第 1-3 个子图 \cref{fig:2-1} -\subref{fig:2-3}。
-
-\begin{lstlisting}
-引用： 图\ref{fig：1}。引用图 2 的第 1 个子图：\ref{fig:2-1}。引用图 2 的第 1-3 个子图 \cref{fig:2-1} -\subref{fig:2-3}。
-\end{lstlisting}
-使用\myverb{\cref{}}命令在引用时不需要额外加“图”。例如 ：
-
-\cref{fig:2-1}
-
-\begin{lstlisting}
-\cref{fig:2-1}
-\end{lstlisting}
-
 \section{表}
 表格制作工具\footnote{推荐俩个表格工具或网站\begin{itemize}
 		\item \textbf{\href{www.tablesgenerator.com}{在线表格生成}\;：}在线编辑表格并转化为\LaTeX 代码
@@ -333,21 +315,6 @@
 \end{center}
 \end{lstlisting}
 
-\subsection{表格引用}
-引用： 表\ref{tab：1}。 引用表：\ref{tab:hebing}。 引用：表\ref{tab:long}。
-\begin{lstlisting}
-引用： 图\ref{tab：1}。 引用图 2 的第一个子图：\ref{tab:hebing}。 引用： 图 \ref{fig:long}。
-\end{lstlisting}
-
-使用\myverb{\cref{}}命令在引用时不需要额外加“表”。例如 ：
-
-\cref{tab:hebing}
-
-\begin{lstlisting}
-	\cref{tab:hebing}
-\end{lstlisting}
-
-
 \section{数学环境}
 \subsection{定理引理证明}
 \begin{theorem}
@@ -423,41 +390,7 @@ D(x)= \begin{cases}
 \end{equation}
 \end{lstlisting}
 
-\subsection{公式引用}
-引用： 公式 (\ref{equ:1})， 公式 \eqref{equ:1}
-\begin{lstlisting}
-引用： 公式 （\ref{equ:1}）， 公式 \eqref{equ:1}
-\end{lstlisting}
-
-使用\myverb{\cref{}}命令在引用时不需要额外加“公式”和“( )”。例如 ：
-
-\cref{equ:1}
-
-\begin{lstlisting}
-	\cref{equ:1}
-\end{lstlisting}
-
-
-\section{参考文献}
-参考文献建议使用\myverb{bibtex}，若你想使用列表方法，自行百度。
-
-单个引用\cite{choudhary2023multi}。连续引用\cite{kumar2020improved,zhu2019deformable}。连续引用\cite{choudhary2023multi,zhu2019deformable,ZDGC202202020,JXXB201907002}
-\begin{lstlisting}
-单个引用\cite{choudhary2023multi}。连续引用\cite{kumar2020improved,zhu2019deformab
-	le}。连续引用\cite{choudhary2023multi,zhu2019deformable,ZDGC202202020,JXXB201907
-	002}
-\end{lstlisting}
-生成文献 Bib\TeX 引用格式可以使用谷歌学术。知网在生成文献 Bib\TeX 引用格式需要点很多次，因此找朋友开发了一个油猴插件，可以直接复制知网文献的Bib\TeX 格式。
-
-插件地址：\begin{itemize}
-	\item 游猴 :\href{https://greasyfork.org/zh-CN/scripts/444428}{ \;\;https://greasyfork.org/zh-CN/scripts/444428}
-
-	\item GitHub \faGithub :\href{https://github.com/BNDou/getCnkiLiteratureBibTex}{ \;\;https://github.com/BNDou/getCnkiLiteratureBibTex}
-\end{itemize}
-
 \section{列表}
-
-
 \subsection{有序列表}
 \begin{minipage}[t]{0.48\textwidth}
 	\begin{lstlisting}[language=TeX]
@@ -494,6 +427,105 @@ D(x)= \begin{cases}
 		\item 
 	\end{itemize}
 \end{minipage}
+\section{伪代码}
+本模板已加载伪代码相关宏包 \myverb{algorithm2e}。
+
+\begin{algorithm}[H]
+	\caption{How to write algorithms}\label{algorithm3.1}
+	\SetKwRepeat{Do}{do}{while}%
+	\KwData{this text}
+	\KwResult{how to write algorithm with \LaTeX2e }
+	initialization\;
+	\While{not at end of this document}{
+		read current\;
+		\Repeat{this end condition}{
+			do these things\;
+		}
+		\eIf{understand}{
+			go to next section\;
+			current section becomes this one\;
+		}{
+			go back to the beginning of current section\;
+		}
+		\Do{this end condition}{
+			do these things\;
+		}
+	}
+\end{algorithm}
+
+\section{引用}
+\subsection{图引用}
+引用： 图\ref{fig：1}。
+
+引用图 2 的第 1 个子图：\ref{fig:2-1}。
+
+引用图 2 的第 1-3 个子图 \cref{fig:2-1} -\subref{fig:2-3}。
+
+\begin{lstlisting}
+	引用： 图\ref{fig：1}。引用图 2 的第 1 个子图：\ref{fig:2-1}。引用图 2 的第 1-3 个子图 \cref{fig:2-1} -\subref{fig:2-3}。
+\end{lstlisting}
+使用\myverb{\cref{}}命令在引用时不需要额外加“图”。例如 ：
+
+\cref{fig:2-1}
+
+\begin{lstlisting}
+	\cref{fig:2-1}
+\end{lstlisting}
+\subsection{表格引用}
+引用： 表\ref{tab：1}。 引用表：\ref{tab:hebing}。 引用：表\ref{tab:long}。
+\begin{lstlisting}
+	引用： 图\ref{tab：1}。 引用图 2 的第一个子图：\ref{tab:hebing}。 引用： 图 \ref{fig:long}。
+\end{lstlisting}
+
+使用\myverb{\cref{}}命令在引用时不需要额外加“表”。例如 ：
+
+\cref{tab:hebing}
+
+\begin{lstlisting}
+	\cref{tab:hebing}
+\end{lstlisting}
+
+\subsection{公式引用}
+引用： 公式 (\ref{equ:1})， 公式 \eqref{equ:1}
+\begin{lstlisting}
+	引用： 公式 （\ref{equ:1}）， 公式 \eqref{equ:1}
+\end{lstlisting}
+
+使用\myverb{\cref{}}命令在引用时不需要额外加“公式”和“( )”。例如 ：
+
+\cref{equ:1}
+
+\begin{lstlisting}
+	\cref{equ:1}
+\end{lstlisting}
+
+\subsection{算法引用}
+
+这里我们引用了 算法 \ref{algorithm3.1} 和 \cref{algorithm3.1}。
+
+使用\myverb{\cref{}}命令不需要额外加“算法”
+
+\begin{lstlisting}
+	这里我们引用了算法 \ref{algorithm3.1} 和 \cref{algorithm3.1}
+\end{lstlisting}
+
+\section{参考文献}
+参考文献建议使用\myverb{bibtex}，若你想使用列表方法，自行百度。
+
+单个引用\cite{choudhary2023multi}。连续引用\cite{kumar2020improved,zhu2019deformable}。连续引用\cite{choudhary2023multi,zhu2019deformable,ZDGC202202020,JXXB201907002}
+\begin{lstlisting}
+	单个引用\cite{choudhary2023multi}。连续引用\cite{kumar2020improved,zhu2019deformab
+		le}。连续引用\cite{choudhary2023multi,zhu2019deformable,ZDGC202202020,JXXB201907
+		002}
+\end{lstlisting}
+生成文献 Bib\TeX 引用格式可以使用谷歌学术。知网在生成文献 Bib\TeX 引用格式需要点很多次，因此找朋友开发了一个油猴插件，可以直接复制知网文献的Bib\TeX 格式。
+
+插件地址：\begin{itemize}
+	\item 游猴 :\href{https://greasyfork.org/zh-CN/scripts/444428}{ \;\;https://greasyfork.org/zh-CN/scripts/444428}
+	
+	\item GitHub \faGithub :\href{https://github.com/BNDou/getCnkiLiteratureBibTex}{ \;\;https://github.com/BNDou/getCnkiLiteratureBibTex}
+\end{itemize}
+
 
 \section{化学方程式}
 考虑到一些同学需要写化学公式，本模板加载了宏包  \myverb{mhchem} 和 \myverb{chemfig}。 
