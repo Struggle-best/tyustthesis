@@ -1,5 +1,5 @@
 # TYUST_thesis
-  The LaTeX Template for Master's/Doctoral Thesis of Taiyuan University of Technology
+  The LaTeX Template for Master's/Doctoral Thesis of Taiyuan University of Science and Technology
   
   太原科技大学硕士/博士学位论文LaTeX模板
 
