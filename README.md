@@ -1,4 +1,4 @@
-# TYUST_thesis
+# TYUST_thesis 太原科技大学硕博论文 Latex 模板
   The LaTeX Template for Master's/Doctoral Thesis of Taiyuan University of Technology
   
   太原科技大学硕士/博士学位论文LaTeX模板
